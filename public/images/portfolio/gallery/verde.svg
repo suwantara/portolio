@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Abstract green visual exploration">
+    <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#022c22"/>
+            <stop offset="0.55" stop-color="#064e3b"/>
+            <stop offset="1" stop-color="#0f766e"/>
+        </linearGradient>
+        <radialGradient id="mint" cx="0.16" cy="0.18" r="0.7">
+            <stop offset="0" stop-color="#99f6e4" stop-opacity="0.6"/>
+            <stop offset="1" stop-color="#99f6e4" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="teal" cx="0.9" cy="0.86" r="0.6">
+            <stop offset="0" stop-color="#0d9488" stop-opacity="0.8"/>
+            <stop offset="1" stop-color="#0d9488" stop-opacity="0"/>
+        </radialGradient>
+        <pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse">
+            <circle cx="4" cy="4" r="2" fill="#ffffff" fill-opacity="0.08"/>
+        </pattern>
+    </defs>
+    <rect width="1200" height="900" fill="url(#bg)"/>
+    <rect width="1200" height="900" fill="url(#mint)"/>
+    <rect width="1200" height="900" fill="url(#teal)"/>
+    <rect width="1200" height="900" fill="url(#dots)"/>
+    <g fill="none" stroke="#ccfbf1" stroke-opacity="0.35">
+        <path d="M-40 620C180 420 300 760 520 560S780 280 1240 460"/>
+        <path d="M-40 700C180 500 300 840 520 640S780 360 1240 540"/>
+        <path d="M-40 780C180 580 300 920 520 720S780 440 1240 620"/>
+    </g>
+    <circle cx="600" cy="420" r="180" fill="#ffffff" fill-opacity="0.06"/>
+    <circle cx="600" cy="420" r="120" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-dasharray="4 10"/>
+    <circle cx="600" cy="420" r="56" fill="#5eead4" fill-opacity="0.35"/>
+    <rect x="820" y="640" width="260" height="120" rx="18" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.14"/>
+    <rect x="848" y="672" width="120" height="9" rx="4.5" fill="#ffffff" fill-opacity="0.35"/>
+    <rect x="848" y="696" width="190" height="9" rx="4.5" fill="#ffffff" fill-opacity="0.16"/>
+    <rect x="848" y="720" width="90" height="9" rx="4.5" fill="#ffffff" fill-opacity="0.16"/>
+</svg>
