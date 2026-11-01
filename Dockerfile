@@ -32,8 +32,10 @@ RUN apt-get update \
         xml \
         zip \
     && a2enmod headers rewrite \
-    && (a2dismod mpm_event || true) \
-    && a2enmod mpm_prefork \
+    && rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
+    && ln -s /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load \
+    && ln -s /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf \
+    && apache2ctl configtest \
     && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf \
     && sed -ri "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
     && printf 'ServerTokens Prod\nServerSignature Off\n' >> /etc/apache2/apache2.conf \
