@@ -3,6 +3,7 @@
     import ArrowLeft from '@lucide/svelte/icons/arrow-left';
     import Plus from '@lucide/svelte/icons/plus';
     import SeoHead from '@/components/SeoHead.svelte';
+    import CursorGlow from '@/components/CursorGlow.svelte';
     import GalleryGrid from '@/components/GalleryGrid.svelte';
     import SocialLinks from '@/components/SocialLinks.svelte';
     import ThemeToggle from '@/components/ThemeToggle.svelte';
@@ -39,6 +40,8 @@
 <div
     class="relative isolate min-h-screen overflow-x-clip bg-[#f7f8fa] text-foreground dark:bg-[#07080c]"
 >
+    <CursorGlow />
+
     <div
         class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
         aria-hidden="true"
@@ -54,7 +57,7 @@
     <header class="fixed inset-x-0 top-4 z-50 px-4">
         <nav
             aria-label="Gallery"
-            class="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full border border-border/70 bg-background/80 pr-2 pl-3 shadow-sm backdrop-blur-xl sm:pl-4"
+            class="liquid-glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pr-2 pl-3 sm:pl-4"
         >
             <Link
                 href="/"
@@ -78,10 +81,10 @@
             </Link>
 
             <div class="flex items-center gap-1.5">
-                <ThemeToggle />
+                <ThemeToggle class="liquid-glass-control" />
                 <a
                     href={mailto}
-                    class="inline-flex h-9 items-center rounded-full bg-[#0a66c2] px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0958a8] focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                    class="liquid-glass-accent inline-flex h-9 items-center rounded-full px-4 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Let's talk
                 </a>

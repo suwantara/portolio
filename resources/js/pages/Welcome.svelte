@@ -26,6 +26,7 @@
     import { onDestroy, onMount } from 'svelte';
     import SeoHead from '@/components/SeoHead.svelte';
     import BaliClockRails from '@/components/BaliClockRails.svelte';
+    import CursorGlow from '@/components/CursorGlow.svelte';
     import GalleryGrid from '@/components/GalleryGrid.svelte';
     import SocialLinks from '@/components/SocialLinks.svelte';
     import ThemeToggle from '@/components/ThemeToggle.svelte';
@@ -171,6 +172,7 @@
 <div
     class="relative isolate min-h-screen overflow-x-clip bg-[#f7f8fa] text-foreground dark:bg-[#07080c]"
 >
+    <CursorGlow />
     <BaliClockRails />
 
     <div
@@ -189,10 +191,8 @@
         <nav
             aria-label="Primary"
             class={cn(
-                'mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-3 rounded-full border border-border/70 bg-background/80 pr-2 pl-3 backdrop-blur-xl transition-shadow duration-300 sm:pl-4',
-                scrolled
-                    ? 'shadow-lg shadow-slate-900/5 dark:shadow-black/30'
-                    : 'shadow-sm shadow-slate-900/[0.03]',
+                'liquid-glass mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-3 rounded-full pr-2 pl-3 transition-shadow duration-300 sm:pl-4',
+                scrolled && 'liquid-glass-scrolled',
             )}
         >
             <a
@@ -230,11 +230,11 @@
             </div>
 
             <div class="flex items-center gap-1.5">
-                <ThemeToggle />
+                <ThemeToggle class="liquid-glass-control" />
 
                 <a
                     href={mailto}
-                    class="inline-flex h-9 items-center gap-1.5 rounded-full bg-[#0a66c2] px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0958a8] focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                    class="liquid-glass-accent inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Let's talk
                     <ArrowRight class="size-3.5" aria-hidden="true" />
@@ -246,7 +246,7 @@
                     aria-expanded={menuOpen}
                     aria-controls="mobile-nav"
                     aria-label="Toggle navigation"
-                    class="grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
+                    class="liquid-glass-control grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
                 >
                     {#if menuOpen}
                         <X class="size-4" aria-hidden="true" />
@@ -260,7 +260,7 @@
         {#if menuOpen}
             <div
                 id="mobile-nav"
-                class="mx-auto mt-2 w-full max-w-5xl rounded-2xl border border-border/70 bg-background/95 p-2 shadow-lg shadow-slate-900/5 backdrop-blur-xl md:hidden"
+                class="liquid-glass mx-auto mt-2 w-full max-w-5xl rounded-2xl p-2 md:hidden"
             >
                 {#each navLinks as link (link.href)}
                     {#if link.href.startsWith('#')}
