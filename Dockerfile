@@ -2,12 +2,11 @@
 
 FROM node:22-bookworm-slim AS node
 
-FROM php:8.5-apache-bookworm AS app
-
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+FROM php:8.5-fpm-bookworm AS app
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        gettext-base \
         git \
         libcurl4-openssl-dev \
         libfreetype6-dev \
@@ -18,6 +17,8 @@ RUN apt-get update \
         libsqlite3-dev \
         libxml2-dev \
         libzip-dev \
+        nginx \
+        supervisor \
         unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" \
@@ -31,14 +32,8 @@ RUN apt-get update \
         pdo_sqlite \
         xml \
         zip \
-    && a2enmod headers rewrite \
-    && rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
-    && ln -s /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load \
-    && ln -s /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf \
-    && apache2ctl configtest \
-    && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf \
-    && sed -ri "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
-    && printf 'ServerTokens Prod\nServerSignature Off\n' >> /etc/apache2/apache2.conf \
+    && echo "clear_env = no" >> /usr/local/etc/php-fpm.d/www.conf \
+    && rm -f /etc/nginx/sites-enabled/default /etc/nginx/conf.d/default.conf \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
@@ -63,10 +58,12 @@ RUN mkdir -p \
     && rm -rf node_modules /root/.npm \
     && chown -R www-data:www-data storage bootstrap/cache
 
+COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint
 
 EXPOSE 80
 
 ENTRYPOINT ["entrypoint"]
-CMD ["apache2-foreground"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

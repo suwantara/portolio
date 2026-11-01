@@ -2,8 +2,8 @@
 set -e
 
 PORT="${PORT:-80}"
-sed -ri "s/^Listen 80$/Listen ${PORT}/" /etc/apache2/ports.conf
-sed -ri "s/:80>/:${PORT}>/" /etc/apache2/sites-available/000-default.conf
+
+envsubst '${PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf
 
 mkdir -p \
     storage/app/public \
@@ -24,5 +24,7 @@ if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
 fi
 
 php artisan optimize
+
+chown -R www-data:www-data storage bootstrap/cache
 
 exec "$@"
