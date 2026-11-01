@@ -31,6 +31,7 @@ class LlmsTxtController extends Controller
             '',
             '- Portfolio: '.$base.'/',
             '- Gallery: '.$base.'/gallery',
+            '- Blog: '.$base.'/blog',
             '- Email: '.$this->stringValue($profile, 'email'),
             '- Location: '.$this->stringValue($profile, 'location'),
             '',

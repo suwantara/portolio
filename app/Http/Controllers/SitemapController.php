@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PortfolioSetting;
+use App\Models\Post;
 use Illuminate\Http\Response;
 
 class SitemapController extends Controller
@@ -37,6 +38,29 @@ class SitemapController extends Controller
                 'changefreq' => 'weekly',
                 'priority' => '0.8',
                 'images' => $images,
+            ];
+        }
+
+        $posts = Post::query()
+            ->published()
+            ->latest('published_at')
+            ->get(['slug', 'updated_at', 'published_at']);
+
+        $urls[] = [
+            'loc' => $base.'/blog',
+            'lastmod' => $posts->first()?->updated_at?->toAtomString() ?? $lastModified,
+            'changefreq' => 'weekly',
+            'priority' => '0.8',
+            'images' => [],
+        ];
+
+        foreach ($posts as $post) {
+            $urls[] = [
+                'loc' => $base.'/blog/'.$post->slug,
+                'lastmod' => $post->updated_at?->toAtomString() ?? $lastModified,
+                'changefreq' => 'monthly',
+                'priority' => '0.7',
+                'images' => [],
             ];
         }
 

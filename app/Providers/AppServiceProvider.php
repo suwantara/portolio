@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         URL::forceRootUrl(rtrim((string) config('app.url'), '/'));
 
         Gate::define('manage-portfolio', fn (User $user): bool => (bool) $user->is_admin);
+        Gate::define('manage-blog', fn (User $user): bool => (bool) $user->is_admin);
     }
 
     /**

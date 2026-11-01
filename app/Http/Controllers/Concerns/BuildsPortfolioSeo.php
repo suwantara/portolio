@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Concerns;
 
+use App\Models\Post;
+use Illuminate\Support\Str;
+
 trait BuildsPortfolioSeo
 {
     /**
@@ -160,6 +163,114 @@ trait BuildsPortfolioSeo
                     'url' => $base.'/',
                 ],
             ],
+        ];
+    }
+
+    /**
+     * Build the SEO payload for the blog index.
+     *
+     * @param  array<string, mixed>  $portfolio
+     * @param  iterable<int, Post>  $posts
+     * @return array<string, mixed>
+     */
+    protected function blogIndexSeo(array $portfolio, iterable $posts): array
+    {
+        $profile = $this->arrayValue($portfolio, 'profile');
+        $base = $this->portfolioBaseUrl();
+        $name = $this->stringValue($profile, 'name', (string) config('app.name'));
+        $title = 'Blog — '.$name;
+        $description = 'Tutorials, tips, and build notes by '.$name.'.';
+        $url = $base.'/blog';
+        $items = [];
+
+        foreach ($posts as $post) {
+            $items[] = $this->withoutEmptyValues([
+                '@type' => 'BlogPosting',
+                'headline' => $post->title,
+                'url' => $base.'/blog/'.$post->slug,
+                'datePublished' => $post->published_at?->toAtomString(),
+            ]);
+        }
+
+        return [
+            'title' => $title,
+            'description' => $description,
+            'canonical' => $url,
+            'image' => $this->ogImage($base),
+            'type' => 'website',
+            'robots' => 'index, follow, max-image-preview:large',
+            'site_name' => $name,
+            'author' => $name,
+            'schema' => $this->withoutEmptyValues([
+                '@context' => 'https://schema.org',
+                '@type' => 'Blog',
+                'name' => $title,
+                'description' => $description,
+                'url' => $url,
+                'inLanguage' => str_replace('_', '-', app()->getLocale()),
+                'blogPost' => $items,
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => $name,
+                    'url' => $base.'/',
+                ],
+            ]),
+        ];
+    }
+
+    /**
+     * Build the SEO payload for a blog post.
+     *
+     * @param  array<string, mixed>  $portfolio
+     * @return array<string, mixed>
+     */
+    protected function blogPostSeo(array $portfolio, Post $post): array
+    {
+        $profile = $this->arrayValue($portfolio, 'profile');
+        $base = $this->portfolioBaseUrl();
+        $name = $this->stringValue($profile, 'name', (string) config('app.name'));
+        $baseUrl = $base.'/blog/'.$post->slug;
+        $title = $post->title.' — '.$name;
+        $description = $post->excerpt ?: Str::limit(
+            trim(strip_tags($post->renderedContent())),
+            160,
+        );
+        $cover = $this->absoluteAsset((string) $post->cover_image, $base);
+        $image = $cover !== '' ? $cover : $this->ogImage($base);
+
+        return [
+            'title' => $title,
+            'description' => $description,
+            'canonical' => $baseUrl,
+            'image' => $image,
+            'type' => 'article',
+            'robots' => 'index, follow, max-image-preview:large',
+            'site_name' => $name,
+            'author' => $name,
+            'schema' => $this->withoutEmptyValues([
+                '@context' => 'https://schema.org',
+                '@type' => 'BlogPosting',
+                'headline' => $post->title,
+                'description' => $description,
+                'image' => $image,
+                'url' => $baseUrl,
+                'mainEntityOfPage' => [
+                    '@type' => 'WebPage',
+                    '@id' => $baseUrl,
+                ],
+                'datePublished' => $post->published_at?->toAtomString(),
+                'dateModified' => $post->updated_at?->toAtomString(),
+                'inLanguage' => str_replace('_', '-', app()->getLocale()),
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => $name,
+                    'url' => $base.'/',
+                ],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => $name,
+                ],
+            ]),
         ];
     }
 

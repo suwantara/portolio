@@ -5,7 +5,7 @@ import SettingsLayout from '@/layouts/settings/Layout.svelte';
 import { initializeFlashToast } from '@/lib/flash-toast';
 import { initializeTheme } from '@/lib/theme.svelte';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'xuan.';
 
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
@@ -13,10 +13,13 @@ void createInertiaApp({
         switch (true) {
             case name === 'Welcome':
             case name === 'Gallery':
+            case name === 'Blog/Index':
+            case name === 'Blog/Show':
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
             case name === 'settings/Portfolio':
+            case name.startsWith('settings/Blog'):
                 return AppLayout;
             case name.startsWith('settings/'):
             case name.startsWith('teams/'):

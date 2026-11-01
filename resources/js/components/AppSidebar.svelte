@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Link, page } from '@inertiajs/svelte';
+    import Newspaper from '@lucide/svelte/icons/newspaper';
     import SquarePen from '@lucide/svelte/icons/square-pen';
     import type { Snippet } from 'svelte';
     import AppLogo from '@/components/AppLogo.svelte';
@@ -34,6 +35,11 @@
                       title: 'Portfolio CMS',
                       href: editPortfolio(),
                       icon: SquarePen,
+                  },
+                  {
+                      title: 'Blog',
+                      href: '/settings/blog',
+                      icon: Newspaper,
                   },
               ]
             : [],

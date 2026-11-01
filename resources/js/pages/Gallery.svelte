@@ -73,12 +73,22 @@
                 </span>
             </Link>
 
-            <Link
-                href="/"
-                class="hidden rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:inline-flex"
+            <div
+                class="hidden items-center gap-1 text-sm font-medium text-muted-foreground sm:flex"
             >
-                Back to portfolio
-            </Link>
+                <Link
+                    href="/"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground"
+                >
+                    Back to portfolio
+                </Link>
+                <Link
+                    href="/blog"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground"
+                >
+                    Blog
+                </Link>
+            </div>
 
             <div class="flex items-center gap-1.5">
                 <ThemeToggle class="liquid-glass-control" />

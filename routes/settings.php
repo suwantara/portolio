@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\BlogController as BlogManagementController;
 use App\Http\Controllers\Settings\PortfolioController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
@@ -35,6 +36,17 @@ Route::middleware(['auth'])->group(function () {
         Route::put('settings/portfolio', [PortfolioController::class, 'update'])->name('portfolio.update');
         Route::post('settings/portfolio/media', [PortfolioController::class, 'storeMedia'])->name('portfolio.media.store');
         Route::delete('settings/portfolio/media', [PortfolioController::class, 'destroyMedia'])->name('portfolio.media.destroy');
+    });
+
+    Route::middleware('can:manage-blog')->group(function () {
+        Route::get('settings/blog', [BlogManagementController::class, 'index'])->name('blog.manage');
+        Route::get('settings/blog/create', [BlogManagementController::class, 'create'])->name('blog.create');
+        Route::post('settings/blog', [BlogManagementController::class, 'store'])->name('blog.store');
+        Route::post('settings/blog/preview', [BlogManagementController::class, 'preview'])->name('blog.preview');
+        Route::post('settings/blog/media', [BlogManagementController::class, 'storeMedia'])->name('blog.media.store');
+        Route::get('settings/blog/{post:slug}/edit', [BlogManagementController::class, 'edit'])->name('blog.edit');
+        Route::put('settings/blog/{post:slug}', [BlogManagementController::class, 'update'])->name('blog.update');
+        Route::delete('settings/blog/{post:slug}', [BlogManagementController::class, 'destroy'])->name('blog.destroy');
     });
 
     Route::get('settings/teams', [TeamController::class, 'index'])->name('teams.index');
