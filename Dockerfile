@@ -4,6 +4,8 @@ FROM node:22-bookworm-slim AS node
 
 FROM php:8.5-fpm-bookworm AS app
 
+ARG APP_URL=/
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         git \
@@ -53,7 +55,7 @@ RUN mkdir -p \
         bootstrap/cache \
     && composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
     && npm ci \
-    && npm run build \
+    && APP_URL="${APP_URL}" npm run build \
     && rm -rf node_modules /root/.npm \
     && chown -R www-data:www-data storage bootstrap/cache
 
