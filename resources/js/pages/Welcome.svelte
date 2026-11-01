@@ -25,6 +25,7 @@
     import X from '@lucide/svelte/icons/x';
     import { onDestroy, onMount } from 'svelte';
     import SeoHead from '@/components/SeoHead.svelte';
+    import BaliClockRails from '@/components/BaliClockRails.svelte';
     import GalleryGrid from '@/components/GalleryGrid.svelte';
     import SocialLinks from '@/components/SocialLinks.svelte';
     import ThemeToggle from '@/components/ThemeToggle.svelte';
@@ -170,6 +171,8 @@
 <div
     class="relative isolate min-h-screen overflow-x-clip bg-[#f7f8fa] text-foreground dark:bg-[#07080c]"
 >
+    <BaliClockRails />
+
     <div
         class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
         aria-hidden="true"
