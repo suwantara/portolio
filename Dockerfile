@@ -25,7 +25,6 @@ RUN apt-get update \
         curl \
         gd \
         mbstring \
-        opcache \
         pcntl \
         pdo \
         pdo_pgsql \
