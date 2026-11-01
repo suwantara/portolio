@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Link } from '@inertiajs/svelte';
+    import { Link, usePoll } from '@inertiajs/svelte';
     import ArrowLeft from '@lucide/svelte/icons/arrow-left';
     import Plus from '@lucide/svelte/icons/plus';
     import SeoHead from '@/components/SeoHead.svelte';
@@ -12,6 +12,8 @@
         portfolio,
         seo,
     }: { portfolio: PortfolioContent; seo: PortfolioSeo } = $props();
+
+    usePoll(5000, { only: ['portfolio'] });
 
     const profile = $derived(portfolio.profile);
     const socials = $derived(portfolio.socials);

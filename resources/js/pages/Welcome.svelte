@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Link } from '@inertiajs/svelte';
+    import { Link, usePoll } from '@inertiajs/svelte';
     import ArrowRight from '@lucide/svelte/icons/arrow-right';
     import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
     import BadgeCheck from '@lucide/svelte/icons/badge-check';
@@ -52,6 +52,8 @@
         portfolio,
         seo,
     }: { portfolio: PortfolioContent; seo: PortfolioSeo } = $props();
+
+    usePoll(5000, { only: ['portfolio'] });
 
     const profile = $derived(portfolio.profile);
     const stats = $derived(portfolio.stats);
