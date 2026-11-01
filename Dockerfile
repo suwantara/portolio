@@ -1,15 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:22-bookworm-slim AS assets
-
-WORKDIR /app
-
-COPY package.json package-lock.json ./
-RUN npm ci
-
-COPY . .
-RUN npm run build
-
+FROM node:22-bookworm-slim AS node
 
 FROM php:8.5-apache-bookworm AS app
 
@@ -50,8 +41,11 @@ RUN apt-get update \
 WORKDIR /var/www/html
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+
 COPY . .
-COPY --from=assets /app/public/build ./public/build
 
 RUN mkdir -p \
         storage/app/public \
@@ -61,6 +55,9 @@ RUN mkdir -p \
         storage/logs \
         bootstrap/cache \
     && composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
+    && npm ci \
+    && npm run build \
+    && rm -rf node_modules /root/.npm \
     && php artisan storage:link \
     && chown -R www-data:www-data storage bootstrap/cache
 
