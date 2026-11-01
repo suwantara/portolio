@@ -3,6 +3,7 @@
 namespace App\Http\Responses;
 
 use App\Http\Responses\Concerns\RedirectsToCurrentTeam;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Fortify;
@@ -14,8 +15,16 @@ class LoginResponse implements LoginResponseContract
 
     public function toResponse($request): Response
     {
-        return $request->wantsJson()
-            ? new JsonResponse(['two_factor' => false], 200)
-            : redirect()->intended($this->redirectPathForCurrentTeam($request, Fortify::redirects('login')));
+        if ($request->wantsJson()) {
+            return new JsonResponse(['two_factor' => false], 200);
+        }
+
+        $user = $request->user();
+
+        if ($user instanceof User && $user->is_admin) {
+            return redirect()->intended(route('portfolio.edit'));
+        }
+
+        return redirect()->intended($this->redirectPathForCurrentTeam($request, Fortify::redirects('login')));
     }
 }

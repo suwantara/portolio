@@ -78,3 +78,13 @@ test('users are rate limited', function () {
 
     $response->assertTooManyRequests();
 });
+
+test('admins without a team are redirected to the portfolio editor after login', function () {
+    $user = User::factory()->admin()->create();
+    $user->teams()->detach();
+
+    $this->post(route('login.store'), [
+        'email' => $user->email,
+        'password' => 'password',
+    ])->assertRedirect(route('portfolio.edit'));
+});
