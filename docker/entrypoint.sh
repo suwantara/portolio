@@ -1,9 +1,11 @@
 #!/bin/sh
 set -e
 
-PORT="${PORT:-80}"
+PORT="${PORT:-8080}"
 
 envsubst '${PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf
+
+echo "Starting Nginx on port ${PORT}"
 
 mkdir -p \
     storage/app/public \
