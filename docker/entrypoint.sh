@@ -1,11 +1,7 @@
 #!/bin/sh
 set -e
 
-PORT=80
-
-envsubst '${PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf
-
-echo "Starting Nginx on port ${PORT}"
+cp /etc/nginx/templates/default.conf.template /etc/nginx/conf.d/default.conf
 
 mkdir -p \
     storage/app/public \
@@ -26,6 +22,9 @@ if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
 fi
 
 php artisan optimize
+
+echo "Validating Nginx configuration"
+nginx -t
 
 chown -R www-data:www-data storage bootstrap/cache
 
