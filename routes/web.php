@@ -17,7 +17,7 @@ Route::get('robots.txt', RobotsController::class)->name('robots');
 Route::get('llms.txt', LlmsTxtController::class)->name('llms');
 
 Route::prefix('{current_team}')
-    ->middleware(['auth', 'verified', EnsureTeamMembership::class])
+    ->middleware(['auth', EnsureTeamMembership::class])
     ->group(function () {
         Route::get('dashboard', DashboardController::class)->name('dashboard');
     });

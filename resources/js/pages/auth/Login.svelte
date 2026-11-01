@@ -11,13 +11,12 @@
     import InputError from '@/components/InputError.svelte';
     import PasswordInput from '@/components/PasswordInput.svelte';
     import TeamInvitationAlert from '@/components/TeamInvitationAlert.svelte';
-    import TextLink from '@/components/TextLink.svelte';
     import { Button } from '@/components/ui/button';
     import { Checkbox } from '@/components/ui/checkbox';
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';
     import { Spinner } from '@/components/ui/spinner';
-    import { register } from '@/routes';
+    import TextLink from '@/components/TextLink.svelte';
     import { store } from '@/routes/login';
     import { request } from '@/routes/password';
     import type { TeamInvitationContext } from '@/types';
@@ -101,20 +100,6 @@
                 {#if processing}<Spinner />{/if}
                 Log in
             </Button>
-        </div>
-
-        <div class="text-center text-sm text-muted-foreground">
-            Don't have an account?
-            <TextLink
-                href={register({
-                    query: {
-                        invitation: teamInvitation?.code,
-                    },
-                })}
-                data-test="register-link"
-            >
-                Sign up
-            </TextLink>
         </div>
     {/snippet}
 </Form>
