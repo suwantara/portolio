@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-PORT="${PORT:-8080}"
+PORT=80
 
 envsubst '${PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf
 
