@@ -486,7 +486,7 @@
                     <div
                         class="mt-7 grid grid-cols-3 divide-x divide-border/60 border-t border-border/60 pt-5"
                     >
-                        {#each stats as stat (stat.label)}
+                        {#each stats as stat, index (stat.label + index)}
                             <div class="px-4 first:pl-0 last:pr-0 sm:px-5">
                                 <p
                                     class="font-mono text-xl font-medium tracking-tight sm:text-2xl"
@@ -549,7 +549,7 @@
                     </div>
 
                     <div class="mt-5 flex flex-wrap gap-2">
-                        {#each aboutTags as item (item)}
+                        {#each aboutTags as item, index (item + index)}
                             <span
                                 class="rounded-full border border-border/70 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground"
                             >
@@ -589,7 +589,7 @@
                     </div>
 
                     <div class="divide-y divide-border/60">
-                        {#each experience as job (job.company)}
+                        {#each experience as job, index (job.company + index)}
                             <article class="py-5 first:pt-0 last:pb-0">
                                 <div class="flex gap-4 sm:gap-5">
                                     <div
@@ -638,7 +638,7 @@
                                         </p>
 
                                         <ul class="mt-2.5 space-y-1.5">
-                                            {#each job.highlights as highlight (highlight)}
+                                            {#each job.highlights as highlight, index (highlight + index)}
                                                 <li
                                                     class="flex gap-2.5 text-sm leading-relaxed text-muted-foreground"
                                                 >
@@ -654,7 +654,7 @@
                                         <div
                                             class="mt-3 flex flex-wrap gap-1.5"
                                         >
-                                            {#each job.skills as skill (skill)}
+                                            {#each job.skills as skill, index (skill + index)}
                                                 <span
                                                     class="rounded-md bg-muted px-2 py-1 text-[11px] font-medium text-muted-foreground"
                                                 >
@@ -696,7 +696,7 @@
                     </div>
 
                     <div class="grid gap-4 sm:grid-cols-2">
-                        {#each projects as project, index (project.name)}
+                        {#each projects as project, index (project.name + index)}
                             <article
                                 class={cn(
                                     'group overflow-hidden rounded-xl border border-border/70 bg-background/40',
@@ -804,7 +804,7 @@
                                         {project.description}
                                     </p>
                                     <div class="mt-3 flex flex-wrap gap-1.5">
-                                        {#each project.tags as tag (tag)}
+                                        {#each project.tags as tag, index (tag + index)}
                                             <span
                                                 class="rounded-md bg-muted px-2 py-1 text-[11px] font-medium text-muted-foreground"
                                             >
@@ -1028,7 +1028,7 @@
                     </div>
 
                     <div class="space-y-4">
-                        {#each skillGroups as group (group.title)}
+                        {#each skillGroups as group, index (group.title + index)}
                             <div
                                 class="grid gap-2 sm:grid-cols-[120px_minmax(0,1fr)] sm:items-start"
                             >
@@ -1038,7 +1038,7 @@
                                     {group.title}
                                 </h3>
                                 <div class="flex flex-wrap gap-1.5">
-                                    {#each group.skills as skill (skill)}
+                                    {#each group.skills as skill, index (skill + index)}
                                         <span
                                             class="rounded-full border border-border/70 bg-background/60 px-2.5 py-1 text-xs font-medium text-foreground/80"
                                         >
@@ -1080,7 +1080,7 @@
                     </div>
 
                     <div class="space-y-4">
-                        {#each education as item (item.school)}
+                        {#each education as item, index (item.school + index)}
                             <div class="flex gap-4">
                                 <div
                                     class="grid size-12 shrink-0 place-items-center rounded-xl border border-border/70 bg-background/60 text-muted-foreground"
@@ -1301,7 +1301,7 @@
                     </div>
 
                     <div class="divide-y divide-border/60">
-                        {#each languages as language (language.name)}
+                        {#each languages as language, index (language.name + index)}
                             <div
                                 class="flex items-center justify-between gap-3 py-2 first:pt-0 last:pb-0"
                             >
