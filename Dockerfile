@@ -8,6 +8,7 @@ ARG APP_URL=/
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        curl \
         git \
         libcurl4-openssl-dev \
         libfreetype6-dev \
@@ -62,9 +63,13 @@ RUN mkdir -p \
 COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint
-RUN chmod +x /usr/local/bin/entrypoint
+COPY docker/healthcheck.sh /usr/local/bin/healthcheck
+RUN chmod +x /usr/local/bin/entrypoint /usr/local/bin/healthcheck
 
 EXPOSE 80
+
+HEALTHCHECK --interval=10s --timeout=5s --start-period=45s --retries=6 \
+    CMD ["/usr/local/bin/healthcheck"]
 
 ENTRYPOINT ["entrypoint"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

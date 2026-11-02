@@ -1,37 +1,12 @@
 <?php
 
-use App\Enums\TeamRole;
-use App\Models\Team;
-use App\Models\TeamInvitation;
 use App\Models\User;
 use Illuminate\Support\Facades\RateLimiter;
-use Inertia\Testing\AssertableInertia as Assert;
 
 test('login screen can be rendered', function () {
     $response = $this->get(route('login'));
 
     $response->assertOk();
-});
-
-test('login screen includes team invitation context', function () {
-    $owner = User::factory()->create();
-    $team = Team::factory()->create(['name' => 'Laravel Team']);
-    $team->members()->attach($owner, ['role' => TeamRole::Owner->value]);
-
-    $invitation = TeamInvitation::factory()->create([
-        'team_id' => $team->id,
-        'email' => 'invited@example.com',
-        'invited_by' => $owner->id,
-    ]);
-
-    $response = $this->get(route('login', ['invitation' => $invitation->code]));
-
-    $response->assertOk();
-    $response->assertInertia(fn (Assert $page) => $page
-        ->component('auth/Login')
-        ->where('teamInvitation.code', $invitation->code)
-        ->where('teamInvitation.teamName', 'Laravel Team'),
-    );
 });
 
 test('users can authenticate using the login screen', function () {
@@ -43,7 +18,16 @@ test('users can authenticate using the login screen', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard'));
+    $response->assertRedirect(route('home'));
+});
+
+test('admins are redirected to the portfolio editor after login', function () {
+    $user = User::factory()->admin()->create();
+
+    $this->post(route('login.store'), [
+        'email' => $user->email,
+        'password' => 'password',
+    ])->assertRedirect(route('portfolio.edit'));
 });
 
 test('users can not authenticate with invalid password', function () {
@@ -77,14 +61,4 @@ test('users are rate limited', function () {
     ]);
 
     $response->assertTooManyRequests();
-});
-
-test('admins without a team are redirected to the portfolio editor after login', function () {
-    $user = User::factory()->admin()->create();
-    $user->teams()->detach();
-
-    $this->post(route('login.store'), [
-        'email' => $user->email,
-        'password' => 'password',
-    ])->assertRedirect(route('portfolio.edit'));
 });

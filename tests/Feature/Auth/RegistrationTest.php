@@ -2,7 +2,7 @@
 
 use App\Models\User;
 
-test('public registration is disabled', function () {
+test('registration is not available', function () {
     $this->get('/register')->assertNotFound();
 
     $this->post('/register', [

@@ -15,12 +15,9 @@ class RobotsController extends Controller
         $disallowed = [
             'Disallow: /settings/',
             'Disallow: /login',
-            'Disallow: /register',
             'Disallow: /forgot-password',
             'Disallow: /reset-password',
-            'Disallow: /verify-email',
             'Disallow: /confirm-password',
-            'Disallow: /two-factor-challenge',
         ];
 
         $lines = ['User-agent: *', 'Allow: /', ...$disallowed, ''];

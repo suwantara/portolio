@@ -11,7 +11,6 @@
     import AppHead from '@/components/AppHead.svelte';
     import InputError from '@/components/InputError.svelte';
     import PasswordInput from '@/components/PasswordInput.svelte';
-    import TeamInvitationAlert from '@/components/TeamInvitationAlert.svelte';
     import TextLink from '@/components/TextLink.svelte';
     import { Button } from '@/components/ui/button';
     import { Checkbox } from '@/components/ui/checkbox';
@@ -20,16 +19,13 @@
     import { Spinner } from '@/components/ui/spinner';
     import { store } from '@/routes/login';
     import { request } from '@/routes/password';
-    import type { TeamInvitationContext } from '@/types';
 
     let {
         status = '',
         canResetPassword,
-        teamInvitation = null,
     }: {
         status?: string;
         canResetPassword: boolean;
-        teamInvitation?: TeamInvitationContext | null;
     } = $props();
 </script>
 
@@ -41,10 +37,6 @@
     >
         {status}
     </div>
-{/if}
-
-{#if teamInvitation}
-    <TeamInvitationAlert invitation={teamInvitation} action="Log in" />
 {/if}
 
 <Form

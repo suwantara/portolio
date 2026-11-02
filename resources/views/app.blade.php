@@ -16,8 +16,6 @@
             $component = (string) ($page['component'] ?? '');
             $defaultRobots = str_starts_with($component, 'auth/')
                 || str_starts_with($component, 'settings/')
-                || str_starts_with($component, 'teams/')
-                || $component === 'Dashboard'
                 ? 'noindex, nofollow'
                 : 'index, follow';
             $seoTitle = $seo['title'] ?? config('app.name', 'Laravel');

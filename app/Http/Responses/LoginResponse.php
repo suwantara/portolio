@@ -2,17 +2,13 @@
 
 namespace App\Http\Responses;
 
-use App\Http\Responses\Concerns\RedirectsToCurrentTeam;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
-use Laravel\Fortify\Fortify;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginResponse implements LoginResponseContract
 {
-    use RedirectsToCurrentTeam;
-
     public function toResponse($request): Response
     {
         if ($request->wantsJson()) {
@@ -25,6 +21,6 @@ class LoginResponse implements LoginResponseContract
             return redirect()->intended(route('portfolio.edit'));
         }
 
-        return redirect()->intended($this->redirectPathForCurrentTeam($request, Fortify::redirects('login')));
+        return redirect()->intended(route('home'));
     }
 }
