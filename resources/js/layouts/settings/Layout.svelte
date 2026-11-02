@@ -27,10 +27,6 @@
                       title: 'Portfolio CMS',
                       href: editPortfolio(),
                   },
-                  {
-                      title: 'Blog',
-                      href: '/settings/blog',
-                  },
               ]
             : []),
         {

@@ -3,7 +3,7 @@
         breadcrumbs: [
             {
                 title: 'Blog',
-                href: '/settings/blog',
+                href: '/settings/portfolio/blog',
             },
         ],
     };
@@ -53,7 +53,7 @@
             return;
         }
 
-        router.delete(`/settings/blog/${post.slug}`, {
+        router.delete(`/settings/portfolio/blog/${post.slug}`, {
             preserveScroll: true,
         });
     }
@@ -70,7 +70,7 @@
 
         <Button asChild>
             {#snippet children(props)}
-                <Link {...props} href="/settings/blog/create" class={props.class}>
+                <Link {...props} href="/settings/portfolio/blog/create" class={props.class}>
                     <Plus class="size-4" aria-hidden="true" />
                     New post
                 </Link>
@@ -97,7 +97,7 @@
                     <div class="min-w-0">
                         <div class="flex flex-wrap items-center gap-2">
                             <Link
-                                href={`/settings/blog/${post.slug}/edit`}
+                                href={`/settings/portfolio/blog/${post.slug}/edit`}
                                 class="truncate font-medium hover:underline"
                             >
                                 {post.title}
@@ -142,7 +142,7 @@
                             {#snippet children(props)}
                                 <Link
                                     {...props}
-                                    href={`/settings/blog/${post.slug}/edit`}
+                                    href={`/settings/portfolio/blog/${post.slug}/edit`}
                                     class={props.class}
                                 >
                                     <Pencil class="size-4" aria-hidden="true" />
@@ -213,7 +213,7 @@
                 {#snippet children(props)}
                     <Link
                         {...props}
-                        href="/settings/blog/create"
+                        href="/settings/portfolio/blog/create"
                         class={props.class}
                     >
                         <Plus class="size-4" aria-hidden="true" />

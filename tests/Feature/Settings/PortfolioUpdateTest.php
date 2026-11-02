@@ -86,3 +86,15 @@ test('portfolio update validates nested content', function () {
 
     expect(PortfolioSetting::query()->exists())->toBeFalse();
 });
+
+test('portfolio sections use path based routes', function () {
+    $user = User::factory()->admin()->create();
+
+    $this->actingAs($user)
+        ->get(route('portfolio.section', 'cta'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->component('settings/Portfolio'));
+
+    expect(parse_url(route('portfolio.section', 'cta'), PHP_URL_PATH))
+        ->toBe('/settings/portfolio/cta');
+});

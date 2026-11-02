@@ -12,7 +12,7 @@
 </script>
 
 <script lang="ts">
-    import { useForm } from '@inertiajs/svelte';
+    import { page, useForm } from '@inertiajs/svelte';
     import ExternalLink from '@lucide/svelte/icons/external-link';
     import Plus from '@lucide/svelte/icons/plus';
     import AppHead from '@/components/AppHead.svelte';
@@ -28,6 +28,11 @@
     import { Button } from '@/components/ui/button';
     import { Input } from '@/components/ui/input';
     import { getError } from '@/lib/errors';
+    import {
+        isPortfolioSection,
+        portfolioSections as tabs,
+        type PortfolioSectionId,
+    } from '@/lib/portfolio-sections';
     import {
         experienceAccents,
         projectCovers,
@@ -46,20 +51,7 @@
         options: PortfolioOptions;
     } = $props();
 
-    const tabs = [
-        { id: 'profile', label: 'Profile' },
-        { id: 'about', label: 'About' },
-        { id: 'experience', label: 'Experience' },
-        { id: 'work', label: 'Work' },
-        { id: 'skills', label: 'Skills' },
-        { id: 'education', label: 'Education' },
-        { id: 'gallery', label: 'Gallery' },
-        { id: 'pages', label: 'Page headers' },
-        { id: 'documents', label: 'Files' },
-        { id: 'cta', label: 'Call to action' },
-    ] as const;
-
-    type Tab = (typeof tabs)[number]['id'];
+    type Tab = PortfolioSectionId;
 
     const tabPrefixes: Record<Tab, string[]> = {
         profile: ['profile.', 'socials.'],
@@ -78,7 +70,23 @@
     const errors = $derived(
         form.errors as unknown as Record<string, unknown>,
     );
+
+    const routeSection = $derived.by<Tab>(() => {
+        const path = new URL(page.url, 'http://localhost').pathname;
+        const match = path.match(/^\/settings\/portfolio\/([^/]+)$/);
+
+        if (match && isPortfolioSection(match[1])) {
+            return match[1];
+        }
+
+        return 'profile';
+    });
+
     let activeTab = $state<Tab>('profile');
+
+    $effect(() => {
+        activeTab = routeSection;
+    });
 
     const availabilityPresets = [
         'Open to new opportunities',
@@ -100,6 +108,14 @@
 
                 if (tab) {
                     activeTab = tab;
+
+                    if (typeof window !== 'undefined') {
+                        window.history.replaceState(
+                            null,
+                            '',
+                            `/settings/portfolio/${tab}`,
+                        );
+                    }
                 }
             },
         });
@@ -298,36 +314,9 @@
             class="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm font-medium text-destructive"
             role="alert"
         >
-            Some fields need attention. Open the tab with a red dot.
+            Some fields need attention. Open the section with a red dot.
         </p>
     {/if}
-
-    <div
-        class="flex gap-1.5 overflow-x-auto rounded-full border border-border/70 bg-card/60 p-1.5 backdrop-blur-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-    >
-        {#each tabs as tab (tab.id)}
-            <button
-                type="button"
-                onclick={() => (activeTab = tab.id)}
-                aria-current={activeTab === tab.id ? 'page' : undefined}
-                class={cn(
-                    'inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-                    activeTab === tab.id
-                        ? 'bg-foreground text-background'
-                        : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                )}
-            >
-                {tab.label}
-                {#if tabHasErrors(tab.id)}
-                    <span
-                        class="size-1.5 rounded-full bg-destructive"
-                        aria-hidden="true"
-                    ></span>
-                    <span class="sr-only">(has errors)</span>
-                {/if}
-            </button>
-        {/each}
-    </div>
 
     <form
         onsubmit={(event) => {

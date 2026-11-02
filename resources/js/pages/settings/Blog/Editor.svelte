@@ -3,7 +3,7 @@
         breadcrumbs: [
             {
                 title: 'Blog',
-                href: '/settings/blog',
+                href: '/settings/portfolio/blog',
             },
         ],
     };
@@ -298,7 +298,7 @@
     <div class="flex flex-wrap items-center justify-between gap-4">
         <div class="flex flex-col gap-2">
             <Link
-                href="/settings/blog"
+                href="/settings/portfolio/blog"
                 class="inline-flex w-fit items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
                 <ArrowLeft class="size-3.5" aria-hidden="true" />

@@ -1,10 +1,8 @@
 <script lang="ts">
     import { Link, page } from '@inertiajs/svelte';
-    import Newspaper from '@lucide/svelte/icons/newspaper';
-    import SquarePen from '@lucide/svelte/icons/square-pen';
     import type { Snippet } from 'svelte';
     import AppLogo from '@/components/AppLogo.svelte';
-    import NavMain from '@/components/NavMain.svelte';
+    import ManageNav from '@/components/ManageNav.svelte';
     import NavUser from '@/components/NavUser.svelte';
     import {
         Sidebar,
@@ -17,7 +15,6 @@
     } from '@/components/ui/sidebar';
     import { toUrl } from '@/lib/utils';
     import { edit as editPortfolio } from '@/routes/portfolio';
-    import type { NavItem } from '@/types';
 
     let {
         children,
@@ -28,22 +25,6 @@
     const isAdmin = $derived(Boolean(page.props.auth?.user?.is_admin));
     const homeUrl = $derived(isAdmin ? toUrl(editPortfolio()) : '/');
 
-    const mainNavItems = $derived<NavItem[]>(
-        isAdmin
-            ? [
-                  {
-                      title: 'Portfolio CMS',
-                      href: editPortfolio(),
-                      icon: SquarePen,
-                  },
-                  {
-                      title: 'Blog',
-                      href: '/settings/blog',
-                      icon: Newspaper,
-                  },
-              ]
-            : [],
-    );
 </script>
 
 <Sidebar collapsible="icon" variant="inset">
@@ -62,7 +43,7 @@
     </SidebarHeader>
 
     <SidebarContent>
-        <NavMain items={mainNavItems} />
+        <ManageNav />
     </SidebarContent>
 
     <SidebarFooter>

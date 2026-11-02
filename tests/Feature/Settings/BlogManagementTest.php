@@ -155,3 +155,14 @@ test('admins can delete a post', function () {
 
     expect(Post::query()->exists())->toBeFalse();
 });
+
+test('blog management is nested under the portfolio CMS route', function () {
+    $user = User::factory()->admin()->create();
+
+    $this->actingAs($user)
+        ->get(route('blog.manage'))
+        ->assertOk();
+
+    expect(parse_url(route('blog.manage'), PHP_URL_PATH))
+        ->toBe('/settings/portfolio/blog');
+});
