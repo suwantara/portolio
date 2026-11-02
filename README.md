@@ -48,13 +48,13 @@ npm run build
 
 ## Admin and CMS
 
-Public registration is intentionally disabled. To create a local administrator:
+Public registration is intentionally disabled and the site is single-admin. To create the administrator account:
 
 ```bash
-php artisan tinker --execute "App\Models\User::factory()->admin()->create(['name' => 'Admin', 'email' => 'admin@example.com']);"
+php artisan app:create-admin admin@example.com --name="Admin"
 ```
 
-The factory password is `password`; change it after signing in. Administrators are redirected to `/settings/portfolio` after login and can edit the portfolio, gallery, media, and social links there.
+The command prompts for a password, or accepts `--password=...`. The password must be at least 12 characters with mixed case, numbers, and symbols. Administrators are redirected to `/settings/portfolio` after login and can edit the portfolio, gallery, media, and social links there.
 
 Portfolio defaults live in `config/portfolio.php`; saved content is stored in the `portfolio_settings` table. Uploaded media is written to `storage/app/public/portfolio`, which is why `php artisan storage:link` is required for local media URLs.
 
@@ -85,14 +85,47 @@ composer test
 
 ## Deployment
 
-Production deploys from the `deploy/railway` branch. The `main` branch intentionally excludes Docker and Railway files so it stays portable and can be cloned for local development without deployment configuration.
+Production deploys from a deployment branch; use `deploy/dokploy` for Dokploy or `deploy/railway` for Railway. The `main` branch intentionally excludes Docker and deployment files so it stays portable and can be cloned for local development without deployment configuration.
 
-The deployment branch contains:
+The shared Docker setup contains:
 
 - `Dockerfile` with PHP-FPM, Nginx, and Supervisor
 - `docker/` runtime configuration
-- `railway.json`
-- `.env.railway.example`
+
+Dokploy adds `docker-compose.yml`, `docker/healthcheck.sh`, and `.env.dokploy.example`. Railway adds `railway.json` and `.env.railway.example`.
+
+### Dokploy
+
+1. Create a **Docker Compose** service from this repository, with branch `deploy/dokploy` and compose path `docker-compose.yml`.
+2. Add the environment variables from `.env.dokploy.example`. At minimum set:
+   - `APP_KEY` — generate with `php artisan key:generate --show`
+   - `APP_URL` — the public HTTPS URL
+   - `DB_PASSWORD` — a strong password, set before the first deploy
+   - keep `INERTIA_SSR_ENABLED=false` because there is no SSR service
+   - keep `QUEUE_CONNECTION=sync` because there is no queue worker
+3. Add a domain to the `web` service on port `80`, enable HTTPS/Let's Encrypt, and point the DNS A record at the VPS.
+4. Deploy. The entrypoint runs migrations and starts Nginx plus PHP-FPM; the healthcheck uses `/up`.
+5. Create the admin from the Compose **Terminal** (select the `web` service):
+
+   ```bash
+   php artisan app:create-admin admin@example.com --name="Admin"
+   ```
+
+6. Persist and back up the named volumes:
+   - `storage` → `/var/www/html/storage/app/public` (uploads)
+   - `postgres-data` → `/var/lib/postgresql` (PostgreSQL 18)
+
+   Configure **Volume Backups** to an S3 destination, or take a logical database backup:
+
+   ```bash
+   docker exec <postgres-container> sh -c 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc' > portolio.dump
+   ```
+
+7. `SESSION_SECURE_COOKIE=true` requires HTTPS. If testing over plain HTTP, set it to `false` temporarily.
+
+PostgreSQL 18 uses `PGDATA=/var/lib/postgresql/18/docker` and mounts the volume at `/var/lib/postgresql`. Do not reuse a PostgreSQL 17 data volume; dump and restore when changing major versions.
+
+### Railway
 
 For Railway, provide the environment variables listed in `.env.railway.example`, set `APP_URL` to the public HTTPS URL, mount a persistent volume at `/var/www/html/storage/app/public`, and keep the custom start command empty so the image entrypoint can run migrations and start the services.
 
