@@ -19,6 +19,7 @@
     <meta property="og:url" content={seo.canonical} />
     <meta property="og:site_name" content={seo.site_name} />
     <meta property="og:image" content={seo.image} />
+    <meta property="og:image:secure_url" content={seo.image} />
     <meta property="og:image:alt" content={seo.title} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />

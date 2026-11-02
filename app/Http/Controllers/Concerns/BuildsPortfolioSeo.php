@@ -302,7 +302,10 @@ trait BuildsPortfolioSeo
      */
     protected function ogImage(string $base): string
     {
-        return $base.'/images/og/portfolio.png';
+        $path = public_path('images/og/portfolio.png');
+        $version = is_file($path) ? filemtime($path) : false;
+
+        return $base.'/images/og/portfolio.png'.($version !== false ? '?v='.$version : '');
     }
 
     /**

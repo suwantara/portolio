@@ -7,6 +7,7 @@ test('home page exposes search and social metadata', function () {
         ->assertSee('<meta name="description"', false)
         ->assertSee('<link rel="canonical"', false)
         ->assertSee('<meta property="og:image"', false)
+        ->assertSee('<meta property="og:image:secure_url"', false)
         ->assertSee('application/ld+json', false)
         ->assertSee('ProfilePage', false)
         ->assertSee('max-image-preview:large', false);

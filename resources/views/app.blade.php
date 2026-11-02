@@ -50,6 +50,7 @@
             <meta property="og:url" content="{{ $seoCanonical }}">
             <meta property="og:site_name" content="{{ $seoSiteName }}">
             <meta property="og:image" content="{{ $seoImage }}">
+            <meta property="og:image:secure_url" content="{{ $seoImage }}">
             <meta property="og:image:alt" content="{{ $seoTitle }}">
             <meta property="og:image:width" content="1200">
             <meta property="og:image:height" content="630">
