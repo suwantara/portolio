@@ -25,14 +25,14 @@ services:
             start_period: 45s
 
     postgres:
-        image: postgres:17-alpine
+        image: postgres:18-alpine
         restart: unless-stopped
         environment:
             POSTGRES_DB: ${DB_DATABASE:-portolio}
             POSTGRES_USER: ${DB_USERNAME:-portolio}
             POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the environment}
         volumes:
-            - postgres-data:/var/lib/postgresql/data
+            - postgres-data:/var/lib/postgresql
         healthcheck:
             test:
                 [
