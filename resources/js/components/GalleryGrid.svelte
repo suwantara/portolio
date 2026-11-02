@@ -25,8 +25,8 @@
     const visibleItems = $derived(items.filter((item) => item.image));
 
     const gridColumns = {
-        2: 'sm:grid-cols-2',
-        3: 'sm:grid-cols-2 lg:grid-cols-3',
+        2: 'sm:columns-2',
+        3: 'sm:columns-2 lg:columns-3',
     };
 
     let galleryOpen = $state(false);
@@ -44,25 +44,20 @@
     }
 </script>
 
-<div class={cn('grid gap-3', gridColumns[columns], className)}>
+<div class={cn('columns-1 gap-4 [column-fill:balance]', gridColumns[columns], className)}>
     {#each visibleItems as item, index (index)}
         <button
             type="button"
             onclick={() => openItem(item)}
-            class={cn(
-                'group relative overflow-hidden rounded-xl border border-border/70 text-left focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none',
-                item.featured && 'sm:col-span-2',
-            )}
+            class="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-xl border border-border/70 text-left focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             aria-label={`Open image: ${item.title}`}
         >
             <img
                 src={item.image ?? ''}
                 alt={item.title}
                 loading="lazy"
-                class={cn(
-                    'w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]',
-                    item.featured ? 'aspect-[16/9]' : 'aspect-[4/3]',
-                )}
+                decoding="async"
+                class="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
             />
             <span
                 class="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent"
