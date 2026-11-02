@@ -34,3 +34,18 @@ test('gallery page renders saved images', function () {
             ->where('portfolio.gallery.0.title', 'Saved frame')
         );
 });
+
+test('gallery header copy is editable from portfolio content', function () {
+    $content = config('portfolio.defaults');
+    $content['gallery_header']['title'] = 'Selected frames';
+    $content['gallery_header']['description'] = 'A custom header with {count} images.';
+
+    PortfolioSetting::updateContent($content);
+
+    $this->get(route('gallery'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('portfolio.gallery_header.title', 'Selected frames')
+            ->where('portfolio.gallery_header.description', 'A custom header with {count} images.')
+        );
+});

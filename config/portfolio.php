@@ -186,6 +186,16 @@ return [
             ['name' => 'linkedin', 'label' => 'LinkedIn', 'href' => 'https://www.linkedin.com'],
             ['name' => 'instagram', 'label' => 'Instagram', 'href' => 'https://www.instagram.com'],
         ],
+        'gallery_header' => [
+            'eyebrow' => 'Portfolio — Gallery',
+            'title' => 'Gallery',
+            'description' => 'A collection of frames, studies, and moments from recent work. {count} images and counting.',
+        ],
+        'blog_header' => [
+            'eyebrow' => 'Portfolio — Journal',
+            'title' => 'Notes & tutorials',
+            'description' => 'Practical write-ups about building products, solving problems, and shipping projects from the first commit to the last detail.',
+        ],
         'cta' => [
             'eyebrow' => "Let's build something",
             'heading' => 'Good products start with a conversation.',

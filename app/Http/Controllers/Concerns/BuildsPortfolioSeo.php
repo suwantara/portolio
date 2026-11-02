@@ -118,12 +118,22 @@ trait BuildsPortfolioSeo
         $profile = $this->arrayValue($portfolio, 'profile');
         $base = $this->portfolioBaseUrl();
         $name = $this->stringValue($profile, 'name', (string) config('app.name'));
-        $title = 'Gallery — '.$name;
-        $description = 'Selected images and visual studies by '.$name.'.';
+        $header = $this->arrayValue($portfolio, 'gallery_header');
+        $galleryItems = $this->arrayList($portfolio, 'gallery');
+        $title = $this->stringValue($header, 'title', 'Gallery').' — '.$name;
+        $description = str_replace(
+            '{count}',
+            (string) count($galleryItems),
+            $this->stringValue(
+                $header,
+                'description',
+                'Selected images and visual studies by '.$name.'.',
+            ),
+        );
 
         $images = [];
 
-        foreach (array_slice($this->arrayList($portfolio, 'gallery'), 0, 30) as $item) {
+        foreach (array_slice($galleryItems, 0, 30) as $item) {
             $source = $this->absoluteAsset($this->stringValue($item, 'image'), $base);
 
             if ($source === '') {
@@ -178,8 +188,13 @@ trait BuildsPortfolioSeo
         $profile = $this->arrayValue($portfolio, 'profile');
         $base = $this->portfolioBaseUrl();
         $name = $this->stringValue($profile, 'name', (string) config('app.name'));
-        $title = 'Blog — '.$name;
-        $description = 'Tutorials, tips, and build notes by '.$name.'.';
+        $header = $this->arrayValue($portfolio, 'blog_header');
+        $title = $this->stringValue($header, 'title', 'Blog').' — '.$name;
+        $description = $this->stringValue(
+            $header,
+            'description',
+            'Tutorials, tips, and build notes by '.$name.'.',
+        );
         $url = $base.'/blog';
         $items = [];
 

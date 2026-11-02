@@ -54,6 +54,7 @@
         { id: 'skills', label: 'Skills' },
         { id: 'education', label: 'Education' },
         { id: 'gallery', label: 'Gallery' },
+        { id: 'pages', label: 'Page headers' },
         { id: 'documents', label: 'Files' },
         { id: 'cta', label: 'Call to action' },
     ] as const;
@@ -68,6 +69,7 @@
         skills: ['skill_groups.'],
         education: ['education.', 'languages.', 'currently_exploring.'],
         gallery: ['gallery.'],
+        pages: ['gallery_header.', 'blog_header.'],
         documents: ['documents.'],
         cta: ['cta.', 'footer_note'],
     };
@@ -1306,6 +1308,73 @@
                         Add gallery image
                     </button>
                 {/if}
+            </div>
+        {:else if activeTab === 'pages'}
+            <div class="space-y-5">
+                <Panel
+                    title="Gallery page"
+                    description="Header copy shown above the gallery grid."
+                >
+                    <div class="grid gap-4">
+                        <Field
+                            label="Eyebrow"
+                            error={getError(errors, 'gallery_header.eyebrow')}
+                        >
+                            <Input bind:value={form.gallery_header.eyebrow} />
+                        </Field>
+                        <Field
+                            label="Title"
+                            error={getError(errors, 'gallery_header.title')}
+                        >
+                            <Input bind:value={form.gallery_header.title} />
+                        </Field>
+                        <Field
+                            label="Description"
+                            error={getError(
+                                errors,
+                                'gallery_header.description',
+                            )}
+                            hint={'Use {count} to insert the number of images.'}
+                        >
+                            <Textarea
+                                bind:value={form.gallery_header.description}
+                                rows={3}
+                            />
+                        </Field>
+                    </div>
+                </Panel>
+
+                <Panel
+                    title="Blog page"
+                    description="Header copy shown above the published posts."
+                >
+                    <div class="grid gap-4">
+                        <Field
+                            label="Eyebrow"
+                            error={getError(errors, 'blog_header.eyebrow')}
+                        >
+                            <Input bind:value={form.blog_header.eyebrow} />
+                        </Field>
+                        <Field
+                            label="Title"
+                            error={getError(errors, 'blog_header.title')}
+                        >
+                            <Input bind:value={form.blog_header.title} />
+                        </Field>
+                        <Field
+                            label="Description"
+                            error={getError(
+                                errors,
+                                'blog_header.description',
+                            )}
+                        >
+                            <Textarea
+                                bind:value={form.blog_header.description}
+                                rows={3}
+                            />
+                        </Field>
+                    </div>
+                </Panel>
             </div>
         {:else if activeTab === 'documents'}
             <div class="space-y-5">

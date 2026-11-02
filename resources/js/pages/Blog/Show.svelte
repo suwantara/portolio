@@ -86,22 +86,22 @@
             >
                 <Link
                     href="/"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Portfolio
                 </Link>
                 <Link
                     href="/gallery"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Gallery
                 </Link>
-                <Link
-                    href="/blog"
-                    class="rounded-full bg-muted px-3.5 py-2 text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                <span
+                    class="rounded-full bg-[#0a66c2] px-3.5 py-2 text-white shadow-sm"
+                    aria-current="page"
                 >
                     Blog
-                </Link>
+                </span>
             </div>
 
             <div class="flex items-center gap-1.5">

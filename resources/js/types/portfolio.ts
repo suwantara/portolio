@@ -95,6 +95,12 @@ export type PortfolioLanguage = {
     level: string;
 };
 
+export type PortfolioPageHeader = {
+    eyebrow: string;
+    title: string;
+    description: string;
+};
+
 export type PortfolioCta = {
     eyebrow: string;
     heading: string;
@@ -117,6 +123,8 @@ export type PortfolioContent = {
     languages: PortfolioLanguage[];
     currently_exploring: string[];
     socials: PortfolioSocial[];
+    gallery_header: PortfolioPageHeader;
+    blog_header: PortfolioPageHeader;
     cta: PortfolioCta;
     footer_note: string;
 };

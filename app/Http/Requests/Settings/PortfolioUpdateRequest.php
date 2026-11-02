@@ -121,6 +121,14 @@ class PortfolioUpdateRequest extends FormRequest
             'cta.button' => ['required', 'string', 'max:60'],
             'cta.subject' => ['required', 'string', 'max:160'],
 
+            'gallery_header.eyebrow' => ['required', 'string', 'max:80'],
+            'gallery_header.title' => ['required', 'string', 'max:80'],
+            'gallery_header.description' => ['required', 'string', 'max:500'],
+
+            'blog_header.eyebrow' => ['required', 'string', 'max:80'],
+            'blog_header.title' => ['required', 'string', 'max:80'],
+            'blog_header.description' => ['required', 'string', 'max:500'],
+
             'footer_note' => ['required', 'string', 'max:200'],
         ];
     }

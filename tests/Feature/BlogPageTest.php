@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PortfolioSetting;
 use App\Models\Post;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -51,4 +52,19 @@ test('the sitemap includes the blog index and published posts', function () {
         ->assertOk()
         ->assertSee('<loc>'.rtrim((string) config('app.url'), '/').'/blog</loc>', false)
         ->assertSee('<loc>'.rtrim((string) config('app.url'), '/').'/blog/'.$post->slug.'</loc>', false);
+});
+
+test('blog header copy is editable from portfolio content', function () {
+    $content = config('portfolio.defaults');
+    $content['blog_header']['title'] = 'Field notes';
+    $content['blog_header']['description'] = 'A custom blog introduction.';
+
+    PortfolioSetting::updateContent($content);
+
+    $this->get(route('blog.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('portfolio.blog_header.title', 'Field notes')
+            ->where('portfolio.blog_header.description', 'A custom blog introduction.')
+        );
 });

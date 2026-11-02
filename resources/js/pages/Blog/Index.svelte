@@ -31,6 +31,8 @@
         `mailto:${profile.email}?subject=${encodeURIComponent(cta.subject)}`,
     );
 
+    const blogHeader = $derived(portfolio.blog_header);
+
     const dateFormatter = new Intl.DateTimeFormat('en-GB', {
         day: 'numeric',
         month: 'short',
@@ -102,18 +104,18 @@
             >
                 <Link
                     href="/"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Portfolio
                 </Link>
                 <Link
                     href="/gallery"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Gallery
                 </Link>
                 <span
-                    class="rounded-full bg-muted px-3.5 py-2 text-foreground"
+                    class="rounded-full bg-[#0a66c2] px-3.5 py-2 text-white shadow-sm"
                     aria-current="page"
                 >
                     Blog
@@ -141,19 +143,17 @@
                 <p
                     class="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase"
                 >
-                    Portfolio — Journal
+                    {blogHeader.eyebrow}
                 </p>
                 <h1
                     class="mt-2 text-4xl font-semibold tracking-[-0.035em] sm:text-5xl"
                 >
-                    Notes &amp; tutorials
+                    {blogHeader.title}
                 </h1>
                 <p
                     class="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-[15px]"
                 >
-                    Practical write-ups about building products, solving
-                    problems, and shipping projects from the first commit to the
-                    last detail.
+                    {blogHeader.description}
                 </p>
             </header>
 

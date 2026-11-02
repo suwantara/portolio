@@ -89,9 +89,9 @@
     const card =
         'rounded-2xl border border-border/70 bg-card/80 shadow-[0_16px_50px_-40px_rgba(15,23,42,0.45)] backdrop-blur-sm';
     const navItem =
-        'rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
+        'rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
     const mobileNavItem =
-        'block rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
+        'block rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
 
     let menuOpen = $state(false);
     let copied = $state(false);
@@ -251,7 +251,7 @@
                     aria-expanded={menuOpen}
                     aria-controls="mobile-nav"
                     aria-label="Toggle navigation"
-                    class="liquid-glass-control grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
+                    class="liquid-glass-control grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
                 >
                     {#if menuOpen}
                         <X class="size-4" aria-hidden="true" />
@@ -986,7 +986,7 @@
                                                 download
                                                 target="_blank"
                                                 rel="noreferrer noopener"
-                                                class="inline-flex h-8 items-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                                                class="inline-flex h-8 items-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                             >
                                                 <Download
                                                     class="size-3.5"
@@ -1390,7 +1390,7 @@
                                     type="button"
                                     onclick={() => runClick(props.onClick)}
                                     aria-label="Close document viewer"
-                                    class="grid size-8 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                                    class="grid size-8 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                                 >
                                     <X class="size-4" aria-hidden="true" />
                                 </button>
@@ -1418,7 +1418,7 @@
                                 href={activeDocument.file}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                class="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+                                class="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 Open in new tab
                                 <ExternalLink
@@ -1434,7 +1434,7 @@
     </main>
 
     <footer
-        class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border/60 py-8 text-center sm:flex-row sm:text-left"
+        class="mt-10 flex w-full flex-col items-center justify-between gap-4 border-t border-border/60 px-4 py-8 text-center sm:flex-row sm:text-left"
     >
         <p class="text-xs text-muted-foreground">
             © 2026 {profile.name}. {portfolio.footer_note}
