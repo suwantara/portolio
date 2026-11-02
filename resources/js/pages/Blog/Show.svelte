@@ -118,13 +118,22 @@
     </header>
 
     <main class="mx-auto w-full max-w-4xl px-4 pt-28 pb-12 sm:px-6 sm:pt-32">
-        <Link
-            href="/blog"
-            class="inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-        >
-            <ArrowLeft class="size-3.5" aria-hidden="true" />
-            Back to blog
-        </Link>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            <Link
+                href="/blog"
+                class="inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+            >
+                <ArrowLeft class="size-3.5" aria-hidden="true" />
+                Back to blog
+            </Link>
+            <Link
+                href="/"
+                class="inline-flex h-10 w-fit items-center gap-2 rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+            >
+                <ArrowLeft class="size-4" aria-hidden="true" />
+                Back to profile
+            </Link>
+        </div>
 
         <article class="mt-8">
             <header>

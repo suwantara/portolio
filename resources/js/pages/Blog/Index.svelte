@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Link } from '@inertiajs/svelte';
+    import ArrowLeft from '@lucide/svelte/icons/arrow-left';
     import ArrowRight from '@lucide/svelte/icons/arrow-right';
     import CursorGlow from '@/components/CursorGlow.svelte';
     import SeoHead from '@/components/SeoHead.svelte';
@@ -133,24 +134,37 @@
     </header>
 
     <main class="mx-auto w-full max-w-6xl px-4 pt-28 pb-12 sm:px-6 sm:pt-32">
-        <header class="mb-8 max-w-2xl">
-            <p
-                class="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase"
+        <div
+            class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+        >
+            <header class="max-w-2xl">
+                <p
+                    class="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase"
+                >
+                    Portfolio — Journal
+                </p>
+                <h1
+                    class="mt-2 text-4xl font-semibold tracking-[-0.035em] sm:text-5xl"
+                >
+                    Notes &amp; tutorials
+                </h1>
+                <p
+                    class="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-[15px]"
+                >
+                    Practical write-ups about building products, solving
+                    problems, and shipping projects from the first commit to the
+                    last detail.
+                </p>
+            </header>
+
+            <Link
+                href="/"
+                class="inline-flex h-10 w-fit items-center gap-2 rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             >
-                Portfolio — Journal
-            </p>
-            <h1
-                class="mt-2 text-4xl font-semibold tracking-[-0.035em] sm:text-5xl"
-            >
-                Notes &amp; tutorials
-            </h1>
-            <p
-                class="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-[15px]"
-            >
-                Practical write-ups about building products, solving problems,
-                and shipping projects from the first commit to the last detail.
-            </p>
-        </header>
+                <ArrowLeft class="size-4" aria-hidden="true" />
+                Back to profile
+            </Link>
+        </div>
 
         {#if posts.data.length > 0}
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
