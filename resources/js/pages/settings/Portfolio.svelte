@@ -99,7 +99,10 @@
         'inline-flex h-9 w-fit items-center gap-1.5 rounded-md border border-dashed border-border bg-background/50 px-3 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none';
 
     function save(): void {
-        form.put(update().url, {
+        const url = new URL(update().url, window.location.origin);
+        url.searchParams.set('section', routeSection);
+
+        form.put(url.toString(), {
             preserveScroll: true,
             onError: () => {
                 const tab = tabs

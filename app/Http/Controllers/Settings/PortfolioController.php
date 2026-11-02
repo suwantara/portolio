@@ -18,6 +18,24 @@ use Inertia\Response;
 class PortfolioController extends Controller
 {
     /**
+     * The editable portfolio sections.
+     *
+     * @var array<int, string>
+     */
+    public const SECTIONS = [
+        'profile',
+        'about',
+        'experience',
+        'work',
+        'skills',
+        'education',
+        'gallery',
+        'documents',
+        'pages',
+        'cta',
+    ];
+
+    /**
      * Show the portfolio content editor.
      */
     public function edit(): Response
@@ -36,6 +54,16 @@ class PortfolioController extends Controller
         PortfolioSetting::updateContent($request->validated());
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Portfolio content updated.')]);
+
+        $section = $request->query('section');
+
+        if (
+            is_string($section)
+            && $section !== 'profile'
+            && in_array($section, self::SECTIONS, true)
+        ) {
+            return to_route('portfolio.section', $section);
+        }
 
         return to_route('portfolio.edit');
     }

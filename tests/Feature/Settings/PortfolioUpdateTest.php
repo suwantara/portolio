@@ -98,3 +98,14 @@ test('portfolio sections use path based routes', function () {
     expect(parse_url(route('portfolio.section', 'cta'), PHP_URL_PATH))
         ->toBe('/settings/portfolio/cta');
 });
+
+test('saving from a portfolio section returns to that section', function () {
+    $user = User::factory()->admin()->create();
+    $content = config('portfolio.defaults');
+    $content['cta']['heading'] = 'Updated CTA heading';
+
+    $this->actingAs($user)
+        ->put(route('portfolio.update', ['section' => 'cta']), $content)
+        ->assertSessionHasNoErrors()
+        ->assertRedirect(route('portfolio.section', 'cta'));
+});

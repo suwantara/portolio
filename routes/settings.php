@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('settings/portfolio', [PortfolioController::class, 'edit'])->name('portfolio.edit');
         Route::put('settings/portfolio', [PortfolioController::class, 'update'])->name('portfolio.update');
         Route::get('settings/portfolio/{section}', [PortfolioController::class, 'edit'])
-            ->whereIn('section', ['profile', 'about', 'experience', 'work', 'skills', 'education', 'gallery', 'documents', 'pages', 'cta'])
+            ->whereIn('section', PortfolioController::SECTIONS)
             ->name('portfolio.section');
         Route::post('settings/portfolio/media', [PortfolioController::class, 'storeMedia'])->name('portfolio.media.store');
         Route::delete('settings/portfolio/media', [PortfolioController::class, 'destroyMedia'])->name('portfolio.media.destroy');
