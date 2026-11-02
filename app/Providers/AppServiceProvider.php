@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\SecurityHeaders;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Inertia\ExceptionResponse;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +35,27 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('manage-portfolio', fn (User $user): bool => (bool) $user->is_admin);
         Gate::define('manage-blog', fn (User $user): bool => (bool) $user->is_admin);
+
+        Inertia::handleExceptionsUsing(function (ExceptionResponse $response) {
+            $status = $response->statusCode();
+            $request = $response->request;
+
+            if (
+                ($request->expectsJson() && ! $request->header('X-Inertia'))
+                || ($status === 500 && config('app.debug'))
+                || ! in_array($status, [401, 403, 404, 419, 429, 500, 503], true)
+            ) {
+                return SecurityHeaders::apply($response->response, $request);
+            }
+
+            return SecurityHeaders::apply(
+                $response
+                    ->render('ErrorPage', ['status' => $status])
+                    ->withSharedData()
+                    ->toResponse($request),
+                $request,
+            );
+        });
     }
 
     /**
