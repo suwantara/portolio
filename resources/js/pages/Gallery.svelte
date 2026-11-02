@@ -78,13 +78,13 @@
             >
                 <Link
                     href="/"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Back to portfolio
                 </Link>
                 <Link
                     href="/blog"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Blog
                 </Link>
@@ -105,7 +105,7 @@
     <main
         class="mx-auto w-full max-w-6xl px-4 pt-28 pb-12 sm:px-6 sm:pt-32"
     >
-        <div
+        <header
             class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
         >
             <div>
@@ -134,7 +134,7 @@
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Back to profile
             </Link>
-        </div>
+        </header>
 
         {#if items.length > 0}
             <GalleryGrid items={visibleItems} columns={3} />

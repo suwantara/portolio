@@ -126,7 +126,7 @@
                         href={activeItem.link}
                         target="_blank"
                         rel="noreferrer noopener"
-                        class="inline-flex h-9 items-center gap-1.5 rounded-full bg-foreground px-4 text-sm font-semibold text-background transition-opacity hover:opacity-90"
+                        class="inline-flex h-9 items-center gap-1.5 rounded-full bg-foreground px-4 text-sm font-semibold text-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                     >
                         Visit link
                         <ExternalLink class="size-3.5" aria-hidden="true" />

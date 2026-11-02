@@ -88,6 +88,10 @@
     );
     const card =
         'rounded-2xl border border-border/70 bg-card/80 shadow-[0_16px_50px_-40px_rgba(15,23,42,0.45)] backdrop-blur-sm';
+    const navItem =
+        'rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
+    const mobileNavItem =
+        'block rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
 
     let menuOpen = $state(false);
     let copied = $state(false);
@@ -215,14 +219,14 @@
                     {#if link.href.startsWith('#')}
                         <a
                             href={link.href}
-                            class="rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                            class={navItem}
                         >
                             {link.label}
                         </a>
                     {:else}
                         <Link
                             href={link.href}
-                            class="rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                            class={navItem}
                         >
                             {link.label}
                         </Link>
@@ -259,8 +263,9 @@
         </nav>
 
         {#if menuOpen}
-            <div
+            <nav
                 id="mobile-nav"
+                aria-label="Mobile"
                 class="liquid-glass mx-auto mt-2 w-full max-w-6xl rounded-2xl p-2 md:hidden"
             >
                 {#each navLinks as link (link.href)}
@@ -268,7 +273,7 @@
                         <a
                             href={link.href}
                             onclick={() => (menuOpen = false)}
-                            class="block rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                            class={mobileNavItem}
                         >
                             {link.label}
                         </a>
@@ -276,14 +281,13 @@
                         <Link
                             href={link.href}
                             onclick={() => (menuOpen = false)}
-                            class="block rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                            class={mobileNavItem}
                         >
                             {link.label}
                         </Link>
                     {/if}
                 {/each}
-
-            </div>
+            </nav>
         {/if}
     </header>
 
@@ -393,7 +397,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-5">
+                    <header class="mt-5">
                         <div class="flex flex-wrap items-center gap-2">
                             <h1
                                 id="profile-name"
@@ -469,7 +473,7 @@
                                 <Mail class="size-4 shrink-0" aria-hidden="true" />
                                 <a
                                     href={mailto}
-                                    class="truncate hover:text-foreground hover:underline"
+                                    class="truncate rounded-sm hover:text-foreground hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                 >
                                     {profile.email}
                                 </a>
@@ -477,7 +481,7 @@
                         </div>
 
                         <SocialLinks {socials} class="mt-4" />
-                    </div>
+                    </header>
 
                     <div
                         class="mt-7 grid grid-cols-3 divide-x divide-border/60 border-t border-border/60 pt-5"
@@ -710,7 +714,7 @@
                                     {#if project.image}
                                         <img
                                             src={project.image}
-                                            alt=""
+                                            alt={`${project.name} project preview`}
                                             class="absolute inset-0 size-full object-cover"
                                         />
                                         <div
@@ -813,7 +817,7 @@
                                             href={project.link}
                                             target="_blank"
                                             rel="noreferrer noopener"
-                                            class="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-[#0a66c2] hover:underline dark:text-sky-400"
+                                            class="mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                         >
                                             View project
                                             <ExternalLink
@@ -824,7 +828,7 @@
                                     {:else}
                                         <a
                                             href={projectMailto(project.name)}
-                                            class="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-[#0a66c2] hover:underline dark:text-sky-400"
+                                            class="mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                         >
                                             Request case study
                                             <ArrowRight
@@ -868,7 +872,7 @@
                             <div class="flex items-center gap-3">
                                 <Link
                                     href={galleryPage.url()}
-                                    class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0a66c2] hover:underline dark:text-sky-400"
+                                    class="inline-flex items-center gap-1.5 rounded-sm text-xs font-semibold text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                 >
                                     View all ({gallery.length})
                                     <ArrowRight
@@ -968,7 +972,7 @@
                                                     href={document.file}
                                                     target="_blank"
                                                     rel="noreferrer noopener"
-                                                    class="inline-flex h-8 items-center gap-1.5 rounded-full bg-foreground px-3 text-xs font-semibold text-background transition-opacity hover:opacity-90"
+                                                    class="inline-flex h-8 items-center gap-1.5 rounded-full bg-foreground px-3 text-xs font-semibold text-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                                 >
                                                     Open
                                                     <ExternalLink
@@ -982,7 +986,7 @@
                                                 download
                                                 target="_blank"
                                                 rel="noreferrer noopener"
-                                                class="inline-flex h-8 items-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                                                class="inline-flex h-8 items-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                             >
                                                 <Download
                                                     class="size-3.5"
@@ -1165,7 +1169,7 @@
                                 />
                                 <a
                                     href={mailto}
-                                    class="truncate text-sm font-medium hover:underline"
+                                    class="truncate rounded-sm text-sm font-medium hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                 >
                                     {profile.email}
                                 </a>
@@ -1414,7 +1418,7 @@
                                 href={activeDocument.file}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                class="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                                class="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 Open in new tab
                                 <ExternalLink
@@ -1427,22 +1431,22 @@
                 {/if}
             </DialogContent>
         </Dialog>
-
-        <footer
-            class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border/60 py-8 text-center sm:flex-row sm:text-left"
-        >
-            <p class="text-xs text-muted-foreground">
-                © 2026 {profile.name}. {portfolio.footer_note}
-            </p>
-            <div class="flex items-center gap-4">
-                <a
-                    href="#top"
-                    class="font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase transition-colors hover:text-foreground"
-                >
-                    Back to top ↑
-                </a>
-                <SocialLinks {socials} size="sm" />
-            </div>
-        </footer>
     </main>
+
+    <footer
+        class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border/60 py-8 text-center sm:flex-row sm:text-left"
+    >
+        <p class="text-xs text-muted-foreground">
+            © 2026 {profile.name}. {portfolio.footer_note}
+        </p>
+        <div class="flex items-center gap-4">
+            <a
+                href="#top"
+                class="rounded-sm font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+            >
+                Back to top ↑
+            </a>
+            <SocialLinks {socials} size="sm" />
+        </div>
+    </footer>
 </div>

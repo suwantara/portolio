@@ -86,19 +86,19 @@
             >
                 <Link
                     href="/"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Portfolio
                 </Link>
                 <Link
                     href="/gallery"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Gallery
                 </Link>
                 <Link
                     href="/blog"
-                    class="rounded-full bg-muted px-3.5 py-2 text-foreground"
+                    class="rounded-full bg-muted px-3.5 py-2 text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Blog
                 </Link>
@@ -120,7 +120,7 @@
     <main class="mx-auto w-full max-w-4xl px-4 pt-28 pb-12 sm:px-6 sm:pt-32">
         <Link
             href="/blog"
-            class="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+            class="inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
         >
             <ArrowLeft class="size-3.5" aria-hidden="true" />
             Back to blog
@@ -179,7 +179,7 @@
                 </div>
                 <a
                     href={mailto}
-                    class="mt-4 inline-flex h-10 items-center gap-2 rounded-full bg-[#0a66c2] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0958a8] sm:mt-0"
+                    class="mt-4 inline-flex h-10 items-center gap-2 rounded-full bg-[#0a66c2] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0958a8] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none sm:mt-0"
                 >
                     Email me
                     <ArrowRight class="size-4" aria-hidden="true" />

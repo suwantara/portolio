@@ -101,13 +101,13 @@
             >
                 <Link
                     href="/"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Portfolio
                 </Link>
                 <Link
                     href="/gallery"
-                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground"
+                    class="rounded-full px-3.5 py-2 transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Gallery
                 </Link>
@@ -133,7 +133,7 @@
     </header>
 
     <main class="mx-auto w-full max-w-6xl px-4 pt-28 pb-12 sm:px-6 sm:pt-32">
-        <div class="mb-8 max-w-2xl">
+        <header class="mb-8 max-w-2xl">
             <p
                 class="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase"
             >
@@ -150,7 +150,7 @@
                 Practical write-ups about building products, solving problems,
                 and shipping projects from the first commit to the last detail.
             </p>
-        </div>
+        </header>
 
         {#if posts.data.length > 0}
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -165,7 +165,7 @@
                             {#if post.cover_image}
                                 <img
                                     src={post.cover_image}
-                                    alt=""
+                                    alt={`Cover image for ${post.title}`}
                                     class="size-full object-cover transition duration-500 group-hover:scale-[1.03]"
                                     loading="lazy"
                                 />
@@ -226,7 +226,7 @@
                         {#if previous?.url}
                             <Link
                                 href={previous.url}
-                                class="inline-flex h-9 items-center rounded-full border border-border bg-background/70 px-4 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+                                class="inline-flex h-9 items-center rounded-full border border-border bg-background/70 px-4 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 Previous
                             </Link>
@@ -234,7 +234,7 @@
                         {#if next?.url}
                             <Link
                                 href={next.url}
-                                class="inline-flex h-9 items-center rounded-full border border-border bg-background/70 px-4 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+                                class="inline-flex h-9 items-center rounded-full border border-border bg-background/70 px-4 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 Next
                             </Link>
@@ -252,7 +252,7 @@
                 </p>
                 <Link
                     href="/"
-                    class="mt-5 inline-flex h-10 items-center rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+                    class="mt-5 inline-flex h-10 items-center rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
                     Back to portfolio
                 </Link>
