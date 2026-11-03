@@ -165,7 +165,10 @@
     });
 
     onDestroy(() => {
-        document.documentElement.classList.remove('scroll-smooth');
+        if (typeof document !== 'undefined') {
+            document.documentElement.classList.remove('scroll-smooth');
+        }
+
         clearTimeout(copyTimer);
     });
 </script>

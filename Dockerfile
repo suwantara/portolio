@@ -55,8 +55,9 @@ RUN mkdir -p \
         bootstrap/cache \
     && composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
     && npm ci \
-    && APP_URL="${APP_URL}" npm run build \
-    && rm -rf node_modules /root/.npm \
+    && APP_URL="${APP_URL}" npm run build:ssr \
+    && npm prune --omit=dev \
+    && rm -rf /root/.npm \
     && chown -R www-data:www-data storage bootstrap/cache
 
 COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template
