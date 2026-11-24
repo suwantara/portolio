@@ -14,14 +14,13 @@
 
     const dateFormatter = new Intl.DateTimeFormat('id-ID', {
         timeZone: 'Asia/Makassar',
-        weekday: 'long',
         day: '2-digit',
-        month: 'long',
+        month: 'short',
         year: 'numeric',
     });
 
     const time = $derived(now ? timeFormatter.format(now) : '--:--:--');
-    const date = $derived(now ? dateFormatter.format(now) : '—');
+    const date = $derived(now ? dateFormatter.format(now) : '...');
 
     onMount(() => {
         now = new Date();

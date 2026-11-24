@@ -41,7 +41,7 @@
     onclick={toggleTheme}
     aria-label="Toggle color theme"
     class={cn(
-        'grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+        'grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:text-foreground dark:hover:text-white focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
         className,
     )}
 >

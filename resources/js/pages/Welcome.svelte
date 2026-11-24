@@ -19,17 +19,15 @@
     import Layers from '@lucide/svelte/icons/layers';
     import Mail from '@lucide/svelte/icons/mail';
     import MapPin from '@lucide/svelte/icons/map-pin';
-    import Menu from '@lucide/svelte/icons/menu';
     import UserPlus from '@lucide/svelte/icons/user-plus';
     import UserRound from '@lucide/svelte/icons/user-round';
     import X from '@lucide/svelte/icons/x';
     import { onDestroy, onMount } from 'svelte';
     import SeoHead from '@/components/SeoHead.svelte';
-    import BaliClockRails from '@/components/BaliClockRails.svelte';
     import CursorGlow from '@/components/CursorGlow.svelte';
     import GalleryGrid from '@/components/GalleryGrid.svelte';
+    import SiteHeader from '@/components/SiteHeader.svelte';
     import SocialLinks from '@/components/SocialLinks.svelte';
-    import ThemeToggle from '@/components/ThemeToggle.svelte';
     import {
         Dialog,
         DialogClose,
@@ -73,30 +71,13 @@
     const cta = $derived(portfolio.cta);
     const galleryPreview = $derived(gallery.slice(0, 4));
 
-    const navLinks = $derived([
-        { label: 'About', href: '#about' },
-        { label: 'Experience', href: '#experience' },
-        { label: 'Work', href: '#work' },
-        ...(gallery.length > 0
-            ? [{ label: 'Gallery', href: '/gallery' }]
-            : []),
-        { label: 'Blog', href: '/blog' },
-        { label: 'Contact', href: '#contact' },
-    ]);
-
     const mailto = $derived(
         `mailto:${profile.email}?subject=${encodeURIComponent(cta.subject)}`,
     );
     const card =
         'rounded-2xl border border-border/70 bg-card/80 shadow-[0_16px_50px_-40px_rgba(15,23,42,0.45)] backdrop-blur-sm';
-    const navItem =
-        'rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
-    const mobileNavItem =
-        'block rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
 
-    let menuOpen = $state(false);
     let copied = $state(false);
-    let scrolled = $state(false);
     let copyTimer: ReturnType<typeof setTimeout> | undefined;
 
     async function copyEmail(): Promise<void> {
@@ -157,10 +138,6 @@
         );
     }
 
-    function handleScroll(): void {
-        scrolled = window.scrollY > 8;
-    }
-
     onMount(() => {
         document.documentElement.classList.add('scroll-smooth');
     });
@@ -171,15 +148,12 @@
     });
 </script>
 
-<svelte:window onscroll={handleScroll} />
-
 <SeoHead {seo} />
 
 <div
     class="relative isolate min-h-screen overflow-x-clip bg-[#f7f8fa] text-foreground dark:bg-[#07080c]"
 >
     <CursorGlow />
-    <BaliClockRails />
 
     <div
         class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -193,104 +167,7 @@
         ></div>
     </div>
 
-    <header class="fixed inset-x-0 top-4 z-50 px-4">
-        <nav
-            aria-label="Primary"
-            class={cn(
-                'liquid-glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pr-2 pl-3 transition-shadow duration-300 sm:pl-4',
-                scrolled && 'liquid-glass-scrolled',
-            )}
-        >
-            <a
-                href="#top"
-                class="flex items-center gap-2.5 rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-            >
-                <span
-                    class="grid size-8 place-items-center rounded-full bg-foreground text-[13px] font-semibold text-background"
-                >
-                    X
-                </span>
-                <span class="text-[15px] font-semibold tracking-tight">
-                    xuan<span class="text-[#0a66c2] dark:text-sky-400">.</span>
-                </span>
-            </a>
-
-            <div class="hidden items-center gap-0.5 md:flex">
-                {#each navLinks as link (link.href)}
-                    {#if link.href.startsWith('#')}
-                        <a
-                            href={link.href}
-                            class={navItem}
-                        >
-                            {link.label}
-                        </a>
-                    {:else}
-                        <Link
-                            href={link.href}
-                            class={navItem}
-                        >
-                            {link.label}
-                        </Link>
-                    {/if}
-                {/each}
-            </div>
-
-            <div class="flex items-center gap-1.5">
-                <ThemeToggle class="liquid-glass-control" />
-
-                <a
-                    href={mailto}
-                    class="liquid-glass-accent inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-                >
-                    Let's talk
-                    <ArrowRight class="size-3.5" aria-hidden="true" />
-                </a>
-
-                <button
-                    type="button"
-                    onclick={() => (menuOpen = !menuOpen)}
-                    aria-expanded={menuOpen}
-                    aria-controls="mobile-nav"
-                    aria-label="Toggle navigation"
-                    class="liquid-glass-control grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
-                >
-                    {#if menuOpen}
-                        <X class="size-4" aria-hidden="true" />
-                    {:else}
-                        <Menu class="size-4" aria-hidden="true" />
-                    {/if}
-                </button>
-            </div>
-        </nav>
-
-        {#if menuOpen}
-            <nav
-                id="mobile-nav"
-                aria-label="Mobile"
-                class="liquid-glass mx-auto mt-2 w-full max-w-6xl rounded-2xl p-2 md:hidden"
-            >
-                {#each navLinks as link (link.href)}
-                    {#if link.href.startsWith('#')}
-                        <a
-                            href={link.href}
-                            onclick={() => (menuOpen = false)}
-                            class={mobileNavItem}
-                        >
-                            {link.label}
-                        </a>
-                    {:else}
-                        <Link
-                            href={link.href}
-                            onclick={() => (menuOpen = false)}
-                            class={mobileNavItem}
-                        >
-                            {link.label}
-                        </Link>
-                    {/if}
-                {/each}
-            </nav>
-        {/if}
-    </header>
+    <SiteHeader {portfolio} current="home" />
 
     <main id="top" class="mx-auto w-full max-w-6xl px-4 pb-12 sm:px-6">
         <section class="pt-28 sm:pt-32" aria-labelledby="profile-name">
