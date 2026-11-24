@@ -8,14 +8,14 @@
     import Clock from '@lucide/svelte/icons/clock';
     import CodeXml from '@lucide/svelte/icons/code-xml';
     import Copy from '@lucide/svelte/icons/copy';
-    import Download from '@lucide/svelte/icons/download';
+    import Unduh from '@lucide/svelte/icons/download';
     import Eye from '@lucide/svelte/icons/eye';
     import FileText from '@lucide/svelte/icons/file-text';
-    import GalleryHorizontal from '@lucide/svelte/icons/gallery-horizontal';
+    import GaleriHorizontal from '@lucide/svelte/icons/gallery-horizontal';
     import ExternalLink from '@lucide/svelte/icons/external-link';
     import Globe from '@lucide/svelte/icons/globe';
     import GraduationCap from '@lucide/svelte/icons/graduation-cap';
-    import LanguagesIcon from '@lucide/svelte/icons/languages';
+    import BahasaIcon from '@lucide/svelte/icons/languages';
     import Layers from '@lucide/svelte/icons/layers';
     import Mail from '@lucide/svelte/icons/mail';
     import MapPin from '@lucide/svelte/icons/map-pin';
@@ -27,7 +27,7 @@
     import SeoHead from '@/components/SeoHead.svelte';
     import BaliClockRails from '@/components/BaliClockRails.svelte';
     import CursorGlow from '@/components/CursorGlow.svelte';
-    import GalleryGrid from '@/components/GalleryGrid.svelte';
+    import GaleriGrid from '@/components/GaleriGrid.svelte';
     import SocialLinks from '@/components/SocialLinks.svelte';
     import ThemeToggle from '@/components/ThemeToggle.svelte';
     import {
@@ -75,15 +75,15 @@
     const galleryPreview = $derived(gallery.slice(0, 4));
 
     const navLinks = $derived([
-        { label: 'About', href: '#about' },
-        { label: 'Experience', href: '#experience' },
-        { label: 'Work', href: '#work' },
-        { label: 'Certifications', href: '#certifications' },
+        { label: 'Tentang', href: '#about' },
+        { label: 'Pengalaman', href: '#experience' },
+        { label: 'Karya', href: '#work' },
+        { label: 'Sertifikasi', href: '#certifications' },
         ...(gallery.length > 0
-            ? [{ label: 'Gallery', href: '/gallery' }]
+            ? [{ label: 'Galeri', href: '/gallery' }]
             : []),
-        { label: 'Blog', href: '/blog' },
-        { label: 'Contact', href: '#contact' },
+        { label: 'Jurnal', href: '/blog' },
+        { label: 'Kontak', href: '#contact' },
     ]);
 
     const mailto = $derived(
@@ -96,7 +96,7 @@
     const mobileNavItem =
         'block rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
 
-    let menuOpen = $state(false);
+    let menuBuka = $state(false);
     let copied = $state(false);
     let scrolled = $state(false);
     let copyTimer: ReturnType<typeof setTimeout> | undefined;
@@ -116,11 +116,11 @@
 
     function projectMailto(name: string): string {
         return `mailto:${profile.email}?subject=${encodeURIComponent(
-            `Case study request: ${name}`,
+            `Permintaan studi kasus: ${name}`,
         )}`;
     }
 
-    let documentOpen = $state(false);
+    let documentBuka = $state(false);
     let activeDocument = $state<PortfolioDocument | null>(null);
 
     function runClick(handler: unknown): void {
@@ -135,7 +135,7 @@
         }
 
         activeDocument = document;
-        documentOpen = true;
+        documentBuka = true;
     }
 
     function fileExtension(url: string | null): string {
@@ -153,7 +153,7 @@
         return fileExtension(url) === 'pdf';
     }
 
-    function isViewableImage(url: string | null): boolean {
+    function isLihatableImage(url: string | null): boolean {
         return ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif', 'svg'].includes(
             fileExtension(url),
         );
@@ -244,19 +244,19 @@
                     href={mailto}
                     class="liquid-glass-accent inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Let's talk
+                    Mari berdiskusi
                     <ArrowRight class="size-3.5" aria-hidden="true" />
                 </a>
 
                 <button
                     type="button"
-                    onclick={() => (menuOpen = !menuOpen)}
-                    aria-expanded={menuOpen}
+                    onclick={() => (menuBuka = !menuBuka)}
+                    aria-expanded={menuBuka}
                     aria-controls="mobile-nav"
-                    aria-label="Toggle navigation"
+                    aria-label="Buka atau tutup navigasi"
                     class="liquid-glass-control grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
                 >
-                    {#if menuOpen}
+                    {#if menuBuka}
                         <X class="size-4" aria-hidden="true" />
                     {:else}
                         <Menu class="size-4" aria-hidden="true" />
@@ -265,7 +265,7 @@
             </div>
         </nav>
 
-        {#if menuOpen}
+        {#if menuBuka}
             <nav
                 id="mobile-nav"
                 aria-label="Mobile"
@@ -275,7 +275,7 @@
                     {#if link.href.startsWith('#')}
                         <a
                             href={link.href}
-                            onclick={() => (menuOpen = false)}
+                            onclick={() => (menuBuka = false)}
                             class={mobileNavItem}
                         >
                             {link.label}
@@ -283,7 +283,7 @@
                     {:else}
                         <Link
                             href={link.href}
-                            onclick={() => (menuOpen = false)}
+                            onclick={() => (menuBuka = false)}
                             class={mobileNavItem}
                         >
                             {link.label}
@@ -340,7 +340,7 @@
                     <p
                         class="absolute top-5 left-6 font-mono text-[10px] font-medium tracking-[0.22em] text-slate-500 uppercase dark:text-slate-400"
                     >
-                        Selected work · 2026
+                        Portofolio · 2026
                     </p>
                     <p
                         class="absolute right-6 bottom-5 font-mono text-[10px] tracking-[0.18em] text-slate-500/80 uppercase dark:text-slate-400/80"
@@ -385,7 +385,7 @@
                                 class="inline-flex h-10 items-center gap-2 rounded-full bg-[#0a66c2] px-5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#0958a8] focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 <UserPlus class="size-4" aria-hidden="true" />
-                                Get in touch
+                                Hubungi saya
                             </a>
                             <a
                                 href="#experience"
@@ -395,7 +395,7 @@
                                     class="size-4"
                                     aria-hidden="true"
                                 />
-                                Explore experience
+                                Lihat pengalaman
                             </a>
                         </div>
                     </div>
@@ -525,7 +525,7 @@
                                 id="about-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                About me
+                                Tentang saya
                             </h2>
                         </div>
                         <span
@@ -575,7 +575,7 @@
                                 id="experience-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Experience
+                                Pengalaman
                             </h2>
                         </div>
                         <span
@@ -682,7 +682,7 @@
                                 id="work-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Selected work
+                                Karya pilihan
                             </h2>
                         </div>
                         <span
@@ -816,7 +816,7 @@
                                             rel="noreferrer noopener"
                                             class="mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                         >
-                                            View project
+                                            Lihat proyek
                                             <ExternalLink
                                                 class="size-3.5"
                                                 aria-hidden="true"
@@ -827,7 +827,7 @@
                                             href={projectMailto(project.name)}
                                             class="mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                         >
-                                            Request case study
+                                            Minta studi kasus
                                             <ArrowRight
                                                 class="size-3.5"
                                                 aria-hidden="true"
@@ -853,7 +853,7 @@
                                 <span
                                     class="grid size-8 place-items-center rounded-lg bg-muted text-muted-foreground"
                                 >
-                                    <GalleryHorizontal
+                                    <GaleriHorizontal
                                         class="size-4"
                                         aria-hidden="true"
                                     />
@@ -862,7 +862,7 @@
                                     id="gallery-heading"
                                     class="text-lg font-semibold tracking-tight"
                                 >
-                                    Gallery
+                                    Galeri
                                 </h2>
                             </div>
 
@@ -871,7 +871,7 @@
                                     href={galleryPage.url()}
                                     class="inline-flex items-center gap-1.5 rounded-sm text-xs font-semibold text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                 >
-                                    View all ({gallery.length})
+                                    Lihat semua ({gallery.length})
                                     <ArrowRight
                                         class="size-3.5"
                                         aria-hidden="true"
@@ -885,7 +885,7 @@
                             </div>
                         </div>
 
-                        <GalleryGrid items={galleryPreview} columns={2} />
+                        <GaleriGrid items={galleryPreview} columns={2} />
                     </section>
                 {/if}
 
@@ -909,7 +909,7 @@
                                     id="documents-heading"
                                     class="text-lg font-semibold tracking-tight"
                                 >
-                                    Documents
+                                    Dokumen
                                 </h2>
                             </div>
                             <span
@@ -951,7 +951,7 @@
                                         <div
                                             class="mt-4 flex flex-wrap items-center gap-2"
                                         >
-                                            {#if isPdf(document.file) || isViewableImage(document.file)}
+                                            {#if isPdf(document.file) || isLihatableImage(document.file)}
                                                 <button
                                                     type="button"
                                                     onclick={() =>
@@ -962,7 +962,7 @@
                                                         class="size-3.5"
                                                         aria-hidden="true"
                                                     />
-                                                    View
+                                                    Lihat
                                                 </button>
                                             {:else}
                                                 <a
@@ -971,7 +971,7 @@
                                                     rel="noreferrer noopener"
                                                     class="inline-flex h-8 items-center gap-1.5 rounded-full bg-foreground px-3 text-xs font-semibold text-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                                 >
-                                                    Open
+                                                    Buka
                                                     <ExternalLink
                                                         class="size-3.5"
                                                         aria-hidden="true"
@@ -985,11 +985,11 @@
                                                 rel="noreferrer noopener"
                                                 class="inline-flex h-8 items-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                             >
-                                                <Download
+                                                <Unduh
                                                     class="size-3.5"
                                                     aria-hidden="true"
                                                 />
-                                                Download
+                                                Unduh
                                             </a>
                                         </div>
                                     </article>
@@ -1014,7 +1014,7 @@
                                 id="skills-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Technical expertise
+                                Keahlian teknis
                             </h2>
                         </div>
                         <span
@@ -1060,7 +1060,7 @@
                                     <BadgeCheck class="size-4" aria-hidden="true" />
                                 </span>
                                 <h2 id="certifications-heading" class="text-lg font-semibold tracking-tight">
-                                    Certifications
+                                    Sertifikasi
                                 </h2>
                             </div>
                             <span class="font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase">
@@ -1099,7 +1099,7 @@
                                 id="education-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Education
+                                Pendidikan
                             </h2>
                         </div>
                         <span
@@ -1154,7 +1154,7 @@
                         <p
                             class="font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase"
                         >
-                            Currently exploring
+                            Sedang dipelajari
                         </p>
                         <div class="mt-2 flex flex-wrap gap-1.5">
                             {#each currentlyExploring as topic (topic)}
@@ -1184,7 +1184,7 @@
                             id="contact-heading"
                             class="text-lg font-semibold tracking-tight"
                         >
-                            Contact
+                            Kontak
                         </h2>
                     </div>
 
@@ -1207,7 +1207,7 @@
                             <button
                                 type="button"
                                 onclick={copyEmail}
-                                aria-label="Copy email address"
+                                aria-label="Salin alamat email"
                                 class="grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-background hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                             >
                                 {#if copied}
@@ -1247,13 +1247,13 @@
                                 aria-hidden="true"
                             />
                             <span class="text-sm text-muted-foreground">
-                                Remote-friendly
+                                Fleksibel untuk kerja jarak jauh
                             </span>
                         </div>
                     </div>
 
                     <span class="sr-only" aria-live="polite">
-                        {copied ? 'Email address copied' : ''}
+                        {copied ? 'Alamat email berhasil disalin' : ''}
                     </span>
 
                     <SocialLinks {socials} class="mt-3" />
@@ -1296,15 +1296,15 @@
                         {profile.availability_note}
                     </p>
                     <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        Based in {profile.location}, working remotely with teams
-                        across time zones.
+                        Berbasis di {profile.location}, terbuka bekerja jarak jauh dengan tim
+                        di berbagai zona waktu.
                     </p>
 
                     <a
                         href={mailto}
                         class="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 rounded-full bg-foreground text-sm font-semibold text-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                     >
-                        Start a conversation
+                        Mulai percakapan
                         <ArrowRight class="size-3.5" aria-hidden="true" />
                     </a>
                 </section>
@@ -1317,7 +1317,7 @@
                         <span
                             class="grid size-8 place-items-center rounded-lg bg-muted text-muted-foreground"
                         >
-                            <LanguagesIcon
+                            <BahasaIcon
                                 class="size-4"
                                 aria-hidden="true"
                             />
@@ -1326,7 +1326,7 @@
                             id="languages-heading"
                             class="text-lg font-semibold tracking-tight"
                         >
-                            Languages
+                            Bahasa
                         </h2>
                     </div>
 
@@ -1402,7 +1402,7 @@
             </div>
         </section>
 
-        <Dialog bind:open={documentOpen}>
+        <Dialog bind:open={documentBuka}>
             <DialogContent class="max-w-4xl p-3 sm:p-4">
                 {#if activeDocument}
                     <div class="flex items-start justify-between gap-4 px-1 pb-3">
@@ -1435,7 +1435,7 @@
                                 title={activeDocument.title}
                                 class="h-[68vh] w-full rounded-lg border border-border/70 bg-white"
                             ></iframe>
-                        {:else if isViewableImage(activeDocument.file)}
+                        {:else if isLihatableImage(activeDocument.file)}
                             <img
                                 src={activeDocument.file}
                                 alt={activeDocument.title}
@@ -1450,7 +1450,7 @@
                                 rel="noreferrer noopener"
                                 class="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
-                                Open in new tab
+                                Buka in new tab
                                 <ExternalLink
                                     class="size-3.5"
                                     aria-hidden="true"
@@ -1474,7 +1474,7 @@
                 href="#top"
                 class="rounded-sm font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             >
-                Back to top ↑
+                Kembali ke atas ↑
             </a>
             <SocialLinks {socials} size="sm" />
         </div>
