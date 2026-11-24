@@ -82,7 +82,7 @@
 
     <header class="fixed inset-x-0 top-4 z-50 px-4">
         <nav
-            aria-label="Blog"
+            aria-label="Jurnal"
             class="liquid-glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pr-2 pl-3 sm:pl-4"
         >
             <Link
@@ -106,19 +106,19 @@
                     href="/"
                     class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Portfolio
+                    Portofolio
                 </Link>
                 <Link
                     href="/gallery"
                     class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Gallery
+                    Galeri
                 </Link>
                 <span
                     class="rounded-full bg-[#0a66c2] px-3.5 py-2 text-white shadow-sm"
                     aria-current="page"
                 >
-                    Blog
+                    Jurnal
                 </span>
             </div>
 
@@ -128,7 +128,7 @@
                     href={mailto}
                     class="liquid-glass-accent inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Let's talk
+                    Mari berdiskusi
                     <ArrowRight class="size-3.5" aria-hidden="true" />
                 </a>
             </div>
@@ -162,7 +162,7 @@
                 class="inline-flex h-10 w-fit items-center gap-2 rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
-                Back to profile
+                Kembali ke profil
             </Link>
         </div>
 
@@ -205,7 +205,7 @@
                             >
                                 <span>{formatDate(post.published_at)}</span>
                                 <span aria-hidden="true">·</span>
-                                <span>{post.reading_minutes} min read</span>
+                                <span>{post.reading_minutes} menit baca</span>
                             </div>
                             <h2
                                 class="mt-2 text-lg leading-snug font-semibold tracking-tight transition-colors group-hover:text-[#0a66c2] dark:group-hover:text-sky-400"
@@ -215,12 +215,12 @@
                             <p
                                 class="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground"
                             >
-                                {post.excerpt || 'Read the full article.'}
+                                {post.excerpt || 'Baca artikel selengkapnya.'}
                             </p>
                             <span
                                 class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#0a66c2] dark:text-sky-400"
                             >
-                                Read article
+                                Baca artikel
                                 <ArrowRight
                                     class="size-3.5 transition-transform group-hover:translate-x-0.5"
                                     aria-hidden="true"
@@ -242,7 +242,7 @@
                                 href={previous.url}
                                 class="inline-flex h-9 items-center rounded-full border border-border bg-background/70 px-4 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
-                                Previous
+                                Sebelumnya
                             </Link>
                         {/if}
                         {#if next?.url}
@@ -250,7 +250,7 @@
                                 href={next.url}
                                 class="inline-flex h-9 items-center rounded-full border border-border bg-background/70 px-4 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
-                                Next
+                                Berikutnya
                             </Link>
                         {/if}
                     </div>
@@ -260,15 +260,15 @@
             <div
                 class="rounded-2xl border border-dashed border-border/80 bg-card/50 px-6 py-16 text-center"
             >
-                <p class="text-base font-semibold">No posts published yet.</p>
+                <p class="text-base font-semibold">Belum ada artikel yang diterbitkan.</p>
                 <p class="mt-1 text-sm text-muted-foreground">
-                    Tutorials and project notes will appear here.
+                    Artikel, tutorial, dan catatan proyek akan ditampilkan di sini.
                 </p>
                 <Link
                     href="/"
                     class="mt-5 inline-flex h-10 items-center rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Back to portfolio
+                    Kembali ke portofolio
                 </Link>
             </div>
         {/if}
