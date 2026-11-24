@@ -67,20 +67,23 @@
     const documents = $derived(portfolio.documents);
     const skillGroups = $derived(portfolio.skill_groups);
     const education = $derived(portfolio.education);
+    const certifications = $derived(portfolio.certifications ?? []);
+    const currentlyExploring = $derived(portfolio.currently_exploring ?? []);
     const languages = $derived(portfolio.languages);
     const socials = $derived(portfolio.socials);
     const cta = $derived(portfolio.cta);
     const galleryPreview = $derived(gallery.slice(0, 4));
 
     const navLinks = $derived([
-        { label: 'About', href: '#about' },
-        { label: 'Experience', href: '#experience' },
-        { label: 'Work', href: '#work' },
+        { label: 'Tentang', href: '#about' },
+        { label: 'Pengalaman', href: '#experience' },
+        { label: 'Karya', href: '#work' },
+        { label: 'Sertifikasi', href: '#certifications' },
         ...(gallery.length > 0
-            ? [{ label: 'Gallery', href: '/gallery' }]
+            ? [{ label: 'Galeri', href: '/gallery' }]
             : []),
-        { label: 'Blog', href: '/blog' },
-        { label: 'Contact', href: '#contact' },
+        { label: 'Jurnal', href: '/blog' },
+        { label: 'Kontak', href: '#contact' },
     ]);
 
     const mailto = $derived(
@@ -113,7 +116,7 @@
 
     function projectMailto(name: string): string {
         return `mailto:${profile.email}?subject=${encodeURIComponent(
-            `Case study request: ${name}`,
+            `Permintaan studi kasus: ${name}`,
         )}`;
     }
 
@@ -194,7 +197,7 @@
 
     <header class="fixed inset-x-0 top-4 z-50 px-4">
         <nav
-            aria-label="Primary"
+            aria-label="Navigasi utama"
             class={cn(
                 'liquid-glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pr-2 pl-3 transition-shadow duration-300 sm:pl-4',
                 scrolled && 'liquid-glass-scrolled',
@@ -241,7 +244,7 @@
                     href={mailto}
                     class="liquid-glass-accent inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Let's talk
+                    Mari berdiskusi
                     <ArrowRight class="size-3.5" aria-hidden="true" />
                 </a>
 
@@ -250,7 +253,7 @@
                     onclick={() => (menuOpen = !menuOpen)}
                     aria-expanded={menuOpen}
                     aria-controls="mobile-nav"
-                    aria-label="Toggle navigation"
+                    aria-label="Buka atau tutup navigasi"
                     class="liquid-glass-control grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
                 >
                     {#if menuOpen}
@@ -265,7 +268,7 @@
         {#if menuOpen}
             <nav
                 id="mobile-nav"
-                aria-label="Mobile"
+                aria-label="Navigasi seluler"
                 class="liquid-glass mx-auto mt-2 w-full max-w-6xl rounded-2xl p-2 md:hidden"
             >
                 {#each navLinks as link (link.href)}
@@ -337,7 +340,7 @@
                     <p
                         class="absolute top-5 left-6 font-mono text-[10px] font-medium tracking-[0.22em] text-slate-500 uppercase dark:text-slate-400"
                     >
-                        Portfolio — 2026
+                        Portofolio — 2026
                     </p>
                     <p
                         class="absolute right-6 bottom-5 font-mono text-[10px] tracking-[0.18em] text-slate-500/80 uppercase dark:text-slate-400/80"
@@ -382,7 +385,7 @@
                                 class="inline-flex h-10 items-center gap-2 rounded-full bg-[#0a66c2] px-5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#0958a8] focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 <UserPlus class="size-4" aria-hidden="true" />
-                                Connect
+                                Hubungi saya
                             </a>
                             <a
                                 href="#experience"
@@ -392,7 +395,7 @@
                                     class="size-4"
                                     aria-hidden="true"
                                 />
-                                View experience
+                                Lihat pengalaman
                             </a>
                         </div>
                     </div>
@@ -405,15 +408,6 @@
                             >
                                 {profile.name}
                             </h1>
-                            <span
-                                class="grid size-6 place-items-center rounded-full bg-[#0a66c2] text-white dark:bg-sky-500"
-                                title="Verified profile"
-                            >
-                                <BadgeCheck
-                                    class="size-4"
-                                    aria-hidden="true"
-                                />
-                            </span>
                             <span
                                 class={cn(
                                     'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-medium tracking-[0.14em] uppercase',
@@ -483,6 +477,7 @@
                         <SocialLinks {socials} class="mt-4" />
                     </header>
 
+                    {#if stats.length > 0}
                     <div
                         class="mt-7 grid grid-cols-3 divide-x divide-border/60 border-t border-border/60 pt-5"
                     >
@@ -501,6 +496,8 @@
                             </div>
                         {/each}
                     </div>
+
+                    {/if}
                 </div>
             </div>
         </section>
@@ -528,7 +525,7 @@
                                 id="about-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                About
+                                Tentang saya
                             </h2>
                         </div>
                         <span
@@ -578,7 +575,7 @@
                                 id="experience-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Experience
+                                Pengalaman
                             </h2>
                         </div>
                         <span
@@ -685,7 +682,7 @@
                                 id="work-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Selected work
+                                Karya pilihan
                             </h2>
                         </div>
                         <span
@@ -714,7 +711,7 @@
                                     {#if project.image}
                                         <img
                                             src={project.image}
-                                            alt={`${project.name} project preview`}
+                                            alt={`Pratinjau proyek ${project.name}`}
                                             class="absolute inset-0 size-full object-cover"
                                         />
                                         <div
@@ -865,7 +862,7 @@
                                     id="gallery-heading"
                                     class="text-lg font-semibold tracking-tight"
                                 >
-                                    Gallery
+                                    Galeri
                                 </h2>
                             </div>
 
@@ -874,7 +871,7 @@
                                     href={galleryPage.url()}
                                     class="inline-flex items-center gap-1.5 rounded-sm text-xs font-semibold text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                 >
-                                    View all ({gallery.length})
+                                    Lihat semua ({gallery.length})
                                     <ArrowRight
                                         class="size-3.5"
                                         aria-hidden="true"
@@ -912,7 +909,7 @@
                                     id="documents-heading"
                                     class="text-lg font-semibold tracking-tight"
                                 >
-                                    Documents
+                                    Dokumen
                                 </h2>
                             </div>
                             <span
@@ -965,7 +962,7 @@
                                                         class="size-3.5"
                                                         aria-hidden="true"
                                                     />
-                                                    View
+                                                    Lihat
                                                 </button>
                                             {:else}
                                                 <a
@@ -974,7 +971,7 @@
                                                     rel="noreferrer noopener"
                                                     class="inline-flex h-8 items-center gap-1.5 rounded-full bg-foreground px-3 text-xs font-semibold text-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                                 >
-                                                    Open
+                                                    Buka
                                                     <ExternalLink
                                                         class="size-3.5"
                                                         aria-hidden="true"
@@ -992,7 +989,7 @@
                                                     class="size-3.5"
                                                     aria-hidden="true"
                                                 />
-                                                Download
+                                                Unduh
                                             </a>
                                         </div>
                                     </article>
@@ -1017,7 +1014,7 @@
                                 id="skills-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Skills
+                                Keahlian teknis
                             </h2>
                         </div>
                         <span
@@ -1051,6 +1048,39 @@
                     </div>
                 </section>
 
+                {#if certifications.length > 0}
+                    <section
+                        id="certifications"
+                        aria-labelledby="certifications-heading"
+                        class={cn(card, 'scroll-mt-24 p-5 sm:p-6')}
+                    >
+                        <div class="mb-4 flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-2.5">
+                                <span class="grid size-8 place-items-center rounded-lg bg-muted text-muted-foreground">
+                                    <BadgeCheck class="size-4" aria-hidden="true" />
+                                </span>
+                                <h2 id="certifications-heading" class="text-lg font-semibold tracking-tight">
+                                    Sertifikasi
+                                </h2>
+                            </div>
+                            <span class="font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase">
+                                07
+                            </span>
+                        </div>
+                        <div class="divide-y divide-border/60">
+                            {#each certifications as certification, index (certification.name + index)}
+                                <article class="flex flex-wrap items-start justify-between gap-2 py-3 first:pt-0 last:pb-0">
+                                    <div class="min-w-0">
+                                        <h3 class="text-sm font-semibold">{certification.name}</h3>
+                                        <p class="mt-1 text-xs text-muted-foreground">{certification.issuer}</p>
+                                    </div>
+                                    <span class="font-mono text-[10px] tracking-[0.12em] text-muted-foreground">{certification.year}</span>
+                                </article>
+                            {/each}
+                        </div>
+                    </section>
+                {/if}
+
                 <section
                     aria-labelledby="education-heading"
                     class={cn(card, 'p-5 sm:p-6')}
@@ -1069,13 +1099,13 @@
                                 id="education-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Education
+                                Pendidikan
                             </h2>
                         </div>
                         <span
                             class="font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase"
                         >
-                            07
+                            08
                         </span>
                     </div>
 
@@ -1124,10 +1154,10 @@
                         <p
                             class="font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase"
                         >
-                            Currently exploring
+                            Sedang dipelajari
                         </p>
                         <div class="mt-2 flex flex-wrap gap-1.5">
-                            {#each ['Svelte 5 runes', 'Laravel 12', 'Local-first apps', 'Design tokens'] as topic (topic)}
+                            {#each currentlyExploring as topic (topic)}
                                 <span
                                     class="rounded-full border border-border/70 bg-background/60 px-2.5 py-1 text-xs font-medium text-muted-foreground"
                                 >
@@ -1154,7 +1184,7 @@
                             id="contact-heading"
                             class="text-lg font-semibold tracking-tight"
                         >
-                            Contact
+                            Kontak
                         </h2>
                     </div>
 
@@ -1177,7 +1207,7 @@
                             <button
                                 type="button"
                                 onclick={copyEmail}
-                                aria-label="Copy email address"
+                                aria-label="Salin alamat email"
                                 class="grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-background hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                             >
                                 {#if copied}
@@ -1217,13 +1247,13 @@
                                 aria-hidden="true"
                             />
                             <span class="text-sm text-muted-foreground">
-                                Remote-friendly
+                                Fleksibel untuk kerja jarak jauh
                             </span>
                         </div>
                     </div>
 
                     <span class="sr-only" aria-live="polite">
-                        {copied ? 'Email address copied' : ''}
+                        {copied ? 'Alamat email berhasil disalin' : ''}
                     </span>
 
                     <SocialLinks {socials} class="mt-3" />
@@ -1266,15 +1296,14 @@
                         {profile.availability_note}
                     </p>
                     <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        Based in {profile.location}, working remotely with teams
-                        across time zones.
+                        Berbasis di {profile.location}, terbuka bekerja jarak jauh dengan tim di berbagai zona waktu.
                     </p>
 
                     <a
                         href={mailto}
                         class="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 rounded-full bg-foreground text-sm font-semibold text-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                     >
-                        Start a conversation
+                        Mulai percakapan
                         <ArrowRight class="size-3.5" aria-hidden="true" />
                     </a>
                 </section>
@@ -1296,7 +1325,7 @@
                             id="languages-heading"
                             class="text-lg font-semibold tracking-tight"
                         >
-                            Languages
+                            Bahasa
                         </h2>
                     </div>
 
@@ -1389,7 +1418,7 @@
                                 <button
                                     type="button"
                                     onclick={() => runClick(props.onClick)}
-                                    aria-label="Close document viewer"
+                                    aria-label="Tutup pratinjau dokumen"
                                     class="grid size-8 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                                 >
                                     <X class="size-4" aria-hidden="true" />
@@ -1420,7 +1449,7 @@
                                 rel="noreferrer noopener"
                                 class="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
-                                Open in new tab
+                                Buka di tab baru
                                 <ExternalLink
                                     class="size-3.5"
                                     aria-hidden="true"
@@ -1444,7 +1473,7 @@
                 href="#top"
                 class="rounded-sm font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             >
-                Back to top ↑
+                Kembali ke atas ↑
             </a>
             <SocialLinks {socials} size="sm" />
         </div>
