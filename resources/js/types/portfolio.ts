@@ -90,6 +90,12 @@ export type PortfolioEducation = {
     description: string;
 };
 
+export type PortfolioCertification = {
+    name: string;
+    issuer: string;
+    year: string;
+};
+
 export type PortfolioLanguage = {
     name: string;
     level: string;
@@ -120,6 +126,7 @@ export type PortfolioContent = {
     documents: PortfolioDocument[];
     skill_groups: PortfolioSkillGroup[];
     education: PortfolioEducation[];
+    certifications: PortfolioCertification[];
     languages: PortfolioLanguage[];
     currently_exploring: string[];
     socials: PortfolioSocial[];
