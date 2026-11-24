@@ -268,6 +268,14 @@
 
         form.languages.push({ name: '', level: '' });
     }
+
+    function addCertification(): void {
+        if (form.certifications.length >= 30) {
+            return;
+        }
+
+        form.certifications.push({ name: '', issuer: '', year: '' });
+    }
 </script>
 
 <AppHead title="Portfolio CMS" />
@@ -1190,6 +1198,41 @@
                         >
                             <Plus class="size-4" aria-hidden="true" />
                             Add language
+                        </button>
+                    {/if}
+                </div>
+            </Panel>
+
+            <Panel title="Certifications">
+                <div class="space-y-4">
+                    {#each form.certifications as certification, index (index)}
+                        <div class="rounded-xl border border-border/60 bg-background/40 p-4">
+                            <RepeaterHeader
+                                title={certification.name || 'Untitled certification'}
+                                subtitle={certification.issuer}
+                                canMoveUp={index > 0}
+                                canMoveDown={index < form.certifications.length - 1}
+                                onMoveUp={() => moveItem(form.certifications, index, -1)}
+                                onMoveDown={() => moveItem(form.certifications, index, 1)}
+                                onRemove={() => removeItem(form.certifications, index)}
+                            />
+                            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                                <Field label="Certification name" error={getError(errors, `certifications.${index}.name`)}>
+                                    <Input bind:value={certification.name} />
+                                </Field>
+                                <Field label="Issuing organization" error={getError(errors, `certifications.${index}.issuer`)}>
+                                    <Input bind:value={certification.issuer} />
+                                </Field>
+                                <Field label="Year" error={getError(errors, `certifications.${index}.year`)}>
+                                    <Input bind:value={certification.year} placeholder="2025" />
+                                </Field>
+                            </div>
+                        </div>
+                    {/each}
+                    {#if form.certifications.length < 30}
+                        <button type="button" onclick={addCertification} class={addButton}>
+                            <Plus class="size-4" aria-hidden="true" />
+                            Add certification
                         </button>
                     {/if}
                 </div>
