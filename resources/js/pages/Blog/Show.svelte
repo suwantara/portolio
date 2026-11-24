@@ -64,7 +64,7 @@
 
     <header class="fixed inset-x-0 top-4 z-50 px-4">
         <nav
-            aria-label="Jurnal"
+            aria-label="Blog"
             class="liquid-glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pr-2 pl-3 sm:pl-4"
         >
             <Link
@@ -88,19 +88,19 @@
                     href="/"
                     class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Portofolio
+                    Portfolio
                 </Link>
                 <Link
                     href="/gallery"
                     class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Galeri
+                    Gallery
                 </Link>
                 <span
                     class="rounded-full bg-[#0a66c2] px-3.5 py-2 text-white shadow-sm"
                     aria-current="page"
                 >
-                    Jurnal
+                    Blog
                 </span>
             </div>
 
@@ -110,7 +110,7 @@
                     href={mailto}
                     class="liquid-glass-accent inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Mari berdiskusi
+                    Let's talk
                     <ArrowRight class="size-3.5" aria-hidden="true" />
                 </a>
             </div>
@@ -124,14 +124,14 @@
                 class="inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             >
                 <ArrowLeft class="size-3.5" aria-hidden="true" />
-                Kembali ke jurnal
+                Back to blog
             </Link>
             <Link
                 href="/"
                 class="inline-flex h-10 w-fit items-center gap-2 rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
-                Kembali ke profil
+                Back to profile
             </Link>
         </div>
 
@@ -161,7 +161,7 @@
                     <span aria-hidden="true">·</span>
                     <span>{formatDate(post.published_at)}</span>
                     <span aria-hidden="true">·</span>
-                    <span>{post.reading_minutes} menit baca</span>
+                    <span>{post.reading_minutes} min read</span>
                 </div>
             </header>
 
@@ -190,7 +190,7 @@
                     href={mailto}
                     class="mt-4 inline-flex h-10 items-center gap-2 rounded-full bg-[#0a66c2] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0958a8] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none sm:mt-0"
                 >
-                    Kirim email
+                    Email me
                     <ArrowRight class="size-4" aria-hidden="true" />
                 </a>
             </footer>

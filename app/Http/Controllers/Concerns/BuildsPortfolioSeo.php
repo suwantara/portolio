@@ -70,7 +70,7 @@ trait BuildsPortfolioSeo
                 'url' => $url,
                 'name' => $name,
                 'description' => $description,
-                'inLanguage' => 'id-ID',
+                'inLanguage' => str_replace('_', '-', app()->getLocale()),
             ],
             [
                 '@type' => 'ProfilePage',

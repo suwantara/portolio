@@ -61,7 +61,7 @@
 
     <header class="fixed inset-x-0 top-4 z-50 px-4">
         <nav
-            aria-label="Galeri"
+            aria-label="Gallery"
             class="liquid-glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pr-2 pl-3 sm:pl-4"
         >
             <Link
@@ -85,19 +85,19 @@
                     href="/"
                     class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Portofolio
+                    Portfolio
                 </Link>
                 <span
                     class="rounded-full bg-[#0a66c2] px-3.5 py-2 text-white shadow-sm"
                     aria-current="page"
                 >
-                    Galeri
+                    Gallery
                 </span>
                 <Link
                     href="/blog"
                     class="rounded-full px-3.5 py-2 transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Jurnal
+                    Blog
                 </Link>
             </div>
 
@@ -107,7 +107,7 @@
                     href={mailto}
                     class="liquid-glass-accent inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                 >
-                    Mari berdiskusi
+                    Let's talk
                     <ArrowRight class="size-3.5" aria-hidden="true" />
                 </a>
             </div>
@@ -143,7 +143,7 @@
                 class="inline-flex h-10 w-fit items-center gap-2 rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
-                Kembali ke profil
+                Back to profile
             </Link>
         </header>
 
@@ -154,7 +154,7 @@
                 <p
                     class="font-mono text-[10px] tracking-[0.16em] text-muted-foreground uppercase"
                 >
-                    Menampilkan {visibleItems.length} dari {items.length}
+                    Showing {visibleItems.length} of {items.length}
                 </p>
 
                 {#if hasMore}
@@ -164,7 +164,7 @@
                         class="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-background/70 px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                     >
                         <Plus class="size-4" aria-hidden="true" />
-                        Muat lebih banyak gambar
+                        Load more images
                     </button>
                 {/if}
             </div>
@@ -172,9 +172,9 @@
             <div
                 class="rounded-2xl border border-dashed border-border/80 bg-card/50 px-6 py-16 text-center"
             >
-                <p class="text-base font-semibold">Belum ada gambar.</p>
+                <p class="text-base font-semibold">No images yet.</p>
                 <p class="mt-1 text-sm text-muted-foreground">
-                    Tambahkan gambar melalui CMS portofolio.
+                    Add gallery images through the portfolio CMS.
                 </p>
             </div>
         {/if}
