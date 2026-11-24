@@ -67,6 +67,7 @@
     const documents = $derived(portfolio.documents);
     const skillGroups = $derived(portfolio.skill_groups);
     const education = $derived(portfolio.education);
+    const currentlyExploring = $derived(portfolio.currently_exploring);
     const languages = $derived(portfolio.languages);
     const socials = $derived(portfolio.socials);
     const cta = $derived(portfolio.cta);
@@ -1127,7 +1128,7 @@
                             Currently exploring
                         </p>
                         <div class="mt-2 flex flex-wrap gap-1.5">
-                            {#each ['Svelte 5 runes', 'Laravel 12', 'Local-first apps', 'Design tokens'] as topic (topic)}
+                            {#each currentlyExploring as topic (topic)}
                                 <span
                                     class="rounded-full border border-border/70 bg-background/60 px-2.5 py-1 text-xs font-medium text-muted-foreground"
                                 >
