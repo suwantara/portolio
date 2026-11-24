@@ -67,6 +67,8 @@
     const documents = $derived(portfolio.documents);
     const skillGroups = $derived(portfolio.skill_groups);
     const education = $derived(portfolio.education);
+    const certifications = $derived(portfolio.certifications ?? []);
+    const currentlyExploring = $derived(portfolio.currently_exploring ?? []);
     const languages = $derived(portfolio.languages);
     const socials = $derived(portfolio.socials);
     const cta = $derived(portfolio.cta);
@@ -76,6 +78,7 @@
         { label: 'About', href: '#about' },
         { label: 'Experience', href: '#experience' },
         { label: 'Work', href: '#work' },
+        { label: 'Certifications', href: '#certifications' },
         ...(gallery.length > 0
             ? [{ label: 'Gallery', href: '/gallery' }]
             : []),
@@ -337,7 +340,7 @@
                     <p
                         class="absolute top-5 left-6 font-mono text-[10px] font-medium tracking-[0.22em] text-slate-500 uppercase dark:text-slate-400"
                     >
-                        Portfolio — 2026
+                        Selected work · 2026
                     </p>
                     <p
                         class="absolute right-6 bottom-5 font-mono text-[10px] tracking-[0.18em] text-slate-500/80 uppercase dark:text-slate-400/80"
@@ -382,7 +385,7 @@
                                 class="inline-flex h-10 items-center gap-2 rounded-full bg-[#0a66c2] px-5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#0958a8] focus-visible:ring-2 focus-visible:ring-[#0a66c2] focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
                                 <UserPlus class="size-4" aria-hidden="true" />
-                                Connect
+                                Get in touch
                             </a>
                             <a
                                 href="#experience"
@@ -392,7 +395,7 @@
                                     class="size-4"
                                     aria-hidden="true"
                                 />
-                                View experience
+                                Explore experience
                             </a>
                         </div>
                     </div>
@@ -405,15 +408,6 @@
                             >
                                 {profile.name}
                             </h1>
-                            <span
-                                class="grid size-6 place-items-center rounded-full bg-[#0a66c2] text-white dark:bg-sky-500"
-                                title="Verified profile"
-                            >
-                                <BadgeCheck
-                                    class="size-4"
-                                    aria-hidden="true"
-                                />
-                            </span>
                             <span
                                 class={cn(
                                     'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-medium tracking-[0.14em] uppercase',
@@ -483,6 +477,7 @@
                         <SocialLinks {socials} class="mt-4" />
                     </header>
 
+                    {#if stats.length > 0}
                     <div
                         class="mt-7 grid grid-cols-3 divide-x divide-border/60 border-t border-border/60 pt-5"
                     >
@@ -501,6 +496,8 @@
                             </div>
                         {/each}
                     </div>
+
+                    {/if}
                 </div>
             </div>
         </section>
@@ -528,7 +525,7 @@
                                 id="about-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                About
+                                About me
                             </h2>
                         </div>
                         <span
@@ -1017,7 +1014,7 @@
                                 id="skills-heading"
                                 class="text-lg font-semibold tracking-tight"
                             >
-                                Skills
+                                Technical expertise
                             </h2>
                         </div>
                         <span
@@ -1050,6 +1047,39 @@
                         {/each}
                     </div>
                 </section>
+
+                {#if certifications.length > 0}
+                    <section
+                        id="certifications"
+                        aria-labelledby="certifications-heading"
+                        class={cn(card, 'scroll-mt-24 p-5 sm:p-6')}
+                    >
+                        <div class="mb-4 flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-2.5">
+                                <span class="grid size-8 place-items-center rounded-lg bg-muted text-muted-foreground">
+                                    <BadgeCheck class="size-4" aria-hidden="true" />
+                                </span>
+                                <h2 id="certifications-heading" class="text-lg font-semibold tracking-tight">
+                                    Certifications
+                                </h2>
+                            </div>
+                            <span class="font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase">
+                                07
+                            </span>
+                        </div>
+                        <div class="divide-y divide-border/60">
+                            {#each certifications as certification, index (certification.name + index)}
+                                <article class="flex flex-wrap items-start justify-between gap-2 py-3 first:pt-0 last:pb-0">
+                                    <div class="min-w-0">
+                                        <h3 class="text-sm font-semibold">{certification.name}</h3>
+                                        <p class="mt-1 text-xs text-muted-foreground">{certification.issuer}</p>
+                                    </div>
+                                    <span class="font-mono text-[10px] tracking-[0.12em] text-muted-foreground">{certification.year}</span>
+                                </article>
+                            {/each}
+                        </div>
+                    </section>
+                {/if}
 
                 <section
                     aria-labelledby="education-heading"
@@ -1127,7 +1157,7 @@
                             Currently exploring
                         </p>
                         <div class="mt-2 flex flex-wrap gap-1.5">
-                            {#each ['Svelte 5 runes', 'Laravel 12', 'Local-first apps', 'Design tokens'] as topic (topic)}
+                            {#each currentlyExploring as topic (topic)}
                                 <span
                                     class="rounded-full border border-border/70 bg-background/60 px-2.5 py-1 text-xs font-medium text-muted-foreground"
                                 >
