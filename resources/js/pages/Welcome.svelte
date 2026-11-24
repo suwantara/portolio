@@ -791,7 +791,7 @@
                                         class="flex items-start justify-between gap-3"
                                     >
                                         <h3
-                                            class="line-clamp-2 min-h-12 min-w-0 flex-1 font-semibold"
+                                            class="line-clamp-2 min-w-0 flex-1 font-semibold"
                                             title={project.name}
                                         >
                                             {project.name}
