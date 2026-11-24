@@ -100,6 +100,11 @@ class PortfolioUpdateRequest extends FormRequest
             'education.*.period' => ['required', 'string', 'max:80'],
             'education.*.description' => ['nullable', 'string', 'max:1000'],
 
+            'certifications' => ['array', 'max:30'],
+            'certifications.*.name' => ['required', 'string', 'max:180'],
+            'certifications.*.issuer' => ['required', 'string', 'max:160'],
+            'certifications.*.year' => ['required', 'string', 'max:20'],
+
             'languages' => ['array', 'max:20'],
             'languages.*.name' => ['required', 'string', 'max:80'],
             'languages.*.level' => ['required', 'string', 'max:80'],
