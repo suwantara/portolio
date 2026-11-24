@@ -107,6 +107,9 @@ return [
                 'image' => null,
                 'link' => null,
                 'featured' => true,
+                'selected' => true,
+                'slug' => 'nusa-board',
+                'gallery' => [],
             ],
             [
                 'name' => 'Katalog',
@@ -117,6 +120,9 @@ return [
                 'image' => null,
                 'link' => null,
                 'featured' => false,
+                'selected' => true,
+                'slug' => 'katalog',
+                'gallery' => [],
             ],
             [
                 'name' => 'Signal',
@@ -127,6 +133,9 @@ return [
                 'image' => null,
                 'link' => null,
                 'featured' => false,
+                'selected' => true,
+                'slug' => 'signal',
+                'gallery' => [],
             ],
         ],
         'gallery' => [
@@ -195,6 +204,11 @@ return [
             'eyebrow' => 'Portfolio — Journal',
             'title' => 'Notes & tutorials',
             'description' => 'Practical write-ups about building products, solving problems, and shipping projects from the first commit to the last detail.',
+        ],
+        'work_header' => [
+            'eyebrow' => 'Portfolio / Work',
+            'title' => 'Work',
+            'description' => 'A collection of {count} projects across web development, design, and academic work.',
         ],
         'cta' => [
             'eyebrow' => "Let's build something",

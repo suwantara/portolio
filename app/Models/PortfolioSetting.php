@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\ProjectContent;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -43,6 +44,12 @@ class PortfolioSetting extends Model
             }
         }
 
+        $projects = $content['projects'] ?? null;
+
+        if (is_array($projects)) {
+            $content['projects'] = ProjectContent::normalize($projects);
+        }
+
         return $content;
     }
 
@@ -53,6 +60,12 @@ class PortfolioSetting extends Model
      */
     public static function updateContent(array $content): void
     {
+        $projects = $content['projects'] ?? null;
+
+        if (is_array($projects)) {
+            $content['projects'] = ProjectContent::normalize($projects);
+        }
+
         static::query()->updateOrCreate(['id' => 1], ['content' => $content]);
     }
 

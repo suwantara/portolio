@@ -23,7 +23,9 @@ class RobotsController extends Controller
         $lines = ['User-agent: *', 'Allow: /', ...$disallowed, ''];
 
         foreach ([
+            'Googlebot',
             'GPTBot',
+            'OAI-SearchBot',
             'ChatGPT-User',
             'ClaudeBot',
             'Claude-Web',

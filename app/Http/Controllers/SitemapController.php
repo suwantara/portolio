@@ -29,6 +29,38 @@ class SitemapController extends Controller
             ],
         ];
 
+        $projects = $content['projects'] ?? null;
+
+        if (is_array($projects) && $projects !== []) {
+            $urls[] = [
+                'loc' => $base.'/work',
+                'lastmod' => $lastModified,
+                'changefreq' => 'weekly',
+                'priority' => '0.9',
+                'images' => [],
+            ];
+
+            foreach ($projects as $project) {
+                if (! is_array($project)) {
+                    continue;
+                }
+
+                $slug = $project['slug'] ?? null;
+
+                if (! is_string($slug) || $slug === '') {
+                    continue;
+                }
+
+                $urls[] = [
+                    'loc' => $base.'/work/'.$slug,
+                    'lastmod' => $lastModified,
+                    'changefreq' => 'monthly',
+                    'priority' => '0.8',
+                    'images' => $this->projectImages($project, $base),
+                ];
+            }
+        }
+
         $images = $this->galleryImages($content, $base);
 
         if ($images !== []) {
@@ -109,6 +141,51 @@ class SitemapController extends Controller
         }
 
         return $images;
+    }
+
+    /**
+     * Build image sitemap entries for a project.
+     *
+     * @param  array<string, mixed>  $project
+     * @return array<int, array<string, string>>
+     */
+    private function projectImages(array $project, string $base): array
+    {
+        $candidates = [];
+        $image = $project['image'] ?? null;
+
+        if (is_string($image)) {
+            $candidates[] = $image;
+        }
+
+        $gallery = $project['gallery'] ?? null;
+
+        if (is_array($gallery)) {
+            foreach ($gallery as $galleryImage) {
+                if (is_string($galleryImage)) {
+                    $candidates[] = $galleryImage;
+                }
+            }
+        }
+
+        $title = is_string($project['name'] ?? null) ? $project['name'] : '';
+        $images = [];
+
+        foreach ($candidates as $candidate) {
+            $location = $this->absoluteAsset($candidate, $base);
+
+            if ($location === '') {
+                continue;
+            }
+
+            $images[$location] = [
+                'loc' => $location,
+                'title' => $title,
+                'caption' => '',
+            ];
+        }
+
+        return array_values($images);
     }
 
     /**

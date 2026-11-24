@@ -8,10 +8,12 @@ import { initializeTheme } from '@/lib/theme.svelte';
 const appName = import.meta.env.VITE_APP_NAME || 'xuan.';
 
 void createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title) => title || appName,
     layout: (name) => {
         switch (true) {
             case name === 'Welcome':
+            case name === 'Work/Index':
+            case name === 'Work/Show':
             case name === 'Gallery':
             case name === 'Blog/Index':
             case name === 'Blog/Show':

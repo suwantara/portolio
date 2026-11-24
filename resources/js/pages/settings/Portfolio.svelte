@@ -61,7 +61,7 @@
         skills: ['skill_groups.'],
         education: ['education.', 'languages.', 'currently_exploring.'],
         gallery: ['gallery.'],
-        pages: ['gallery_header.', 'blog_header.'],
+        pages: ['work_header.', 'gallery_header.', 'blog_header.'],
         documents: ['documents.'],
         cta: ['cta.', 'footer_note'],
     };
@@ -211,6 +211,9 @@
             image: null,
             link: null,
             featured: false,
+            selected: false,
+            slug: '',
+            gallery: [],
         });
     }
 
@@ -913,6 +916,21 @@
                                     placeholder="2025"
                                 />
                             </Field>
+                            <div class="sm:col-span-2">
+                                <Field
+                                    label="Slug"
+                                    error={getError(
+                                        errors,
+                                        `projects.${index}.slug`,
+                                    )}
+                                    hint={'Used at /work/{slug}. Leave blank to generate from the name.'}
+                                >
+                                    <Input
+                                        bind:value={project.slug}
+                                        placeholder="project-slug"
+                                    />
+                                </Field>
+                            </div>
                             <Field
                                 label="Cover"
                                 error={getError(
@@ -926,7 +944,7 @@
                                     {/each}
                                 </Select>
                             </Field>
-                            <div class="flex items-end pb-2">
+                            <div class="flex flex-col gap-2 pb-2">
                                 <label
                                     class="flex items-center gap-2 text-sm font-medium"
                                 >
@@ -936,6 +954,16 @@
                                         class="size-4 rounded border-input accent-foreground"
                                     />
                                     Feature this project
+                                </label>
+                                <label
+                                    class="flex items-center gap-2 text-sm font-medium"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        bind:checked={project.selected}
+                                        class="size-4 rounded border-input accent-foreground"
+                                    />
+                                    Show on homepage
                                 </label>
                             </div>
                             <div class="sm:col-span-2">
@@ -949,6 +977,61 @@
                                     )}
                                     hint="Optional. Overrides the gradient cover."
                                 />
+                            </div>
+                            <div class="sm:col-span-2">
+                                <div
+                                    class="mb-3 flex items-center justify-between gap-3"
+                                >
+                                    <div>
+                                        <p class="text-sm font-medium">
+                                            Project gallery
+                                        </p>
+                                        <p
+                                            class="text-xs text-muted-foreground"
+                                        >
+                                            Optional images for the case study
+                                            page.
+                                        </p>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onclick={() =>
+                                            (project.gallery = [
+                                                ...project.gallery,
+                                                '',
+                                            ])}
+                                        class={addButton}
+                                    >
+                                        <Plus
+                                            class="size-4"
+                                            aria-hidden="true"
+                                        />
+                                        Add image
+                                    </button>
+                                </div>
+                                {#if project.gallery.length > 0}
+                                    <div class="space-y-3">
+                                        {#each project.gallery as image, imageIndex (imageIndex)}
+                                            <MediaPicker
+                                                bind:value={
+                                                    project.gallery[imageIndex]
+                                                }
+                                                kind="image"
+                                                label={`Gallery image ${imageIndex + 1}`}
+                                                error={getError(
+                                                    errors,
+                                                    `projects.${index}.gallery.${imageIndex}`,
+                                                )}
+                                            />
+                                        {/each}
+                                    </div>
+                                {:else}
+                                    <p
+                                        class="text-sm text-muted-foreground"
+                                    >
+                                        No gallery images yet.
+                                    </p>
+                                {/if}
                             </div>
                             <Field
                                 label="Project URL"
@@ -1303,6 +1386,39 @@
             </div>
         {:else if activeTab === 'pages'}
             <div class="space-y-5">
+                <Panel
+                    title="Work page"
+                    description="Header copy shown above the full project list."
+                >
+                    <div class="grid gap-4">
+                        <Field
+                            label="Eyebrow"
+                            error={getError(errors, 'work_header.eyebrow')}
+                        >
+                            <Input bind:value={form.work_header.eyebrow} />
+                        </Field>
+                        <Field
+                            label="Title"
+                            error={getError(errors, 'work_header.title')}
+                        >
+                            <Input bind:value={form.work_header.title} />
+                        </Field>
+                        <Field
+                            label="Description"
+                            error={getError(
+                                errors,
+                                'work_header.description',
+                            )}
+                            hint={'Use {count} to insert the number of projects.'}
+                        >
+                            <Textarea
+                                bind:value={form.work_header.description}
+                                rows={3}
+                            />
+                        </Field>
+                    </div>
+                </Panel>
+
                 <Panel
                     title="Gallery page"
                     description="Header copy shown above the gallery grid."

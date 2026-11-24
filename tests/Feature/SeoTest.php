@@ -3,20 +3,22 @@
 test('home page exposes search and social metadata', function () {
     $this->get(route('home'))
         ->assertOk()
-        ->assertSee('<title>Xuan Jinyu — Full-Stack Developer &amp; Design Engineer</title>', false)
-        ->assertSee('<meta name="description"', false)
-        ->assertSee('<link rel="canonical"', false)
-        ->assertSee('<meta property="og:image"', false)
-        ->assertSee('<meta property="og:image:secure_url"', false)
+        ->assertSee('<title data-inertia-fallback inertia>Xuanjinyu — I Wayan Suwantara Putra | Full-Stack Developer &amp; Graphic Designer</title>', false)
+        ->assertSee('name="description"', false)
+        ->assertSee('rel="canonical"', false)
+        ->assertSee('property="og:image"', false)
+        ->assertSee('property="og:image:secure_url"', false)
         ->assertSee('application/ld+json', false)
         ->assertSee('ProfilePage', false)
+        ->assertSee('"@type":"Person"', false)
+        ->assertSee('alternateName', false)
         ->assertSee('max-image-preview:large', false);
 });
 
 test('gallery page exposes its own canonical and image gallery schema', function () {
     $this->get(route('gallery'))
         ->assertOk()
-        ->assertSee('<link rel="canonical" href="'.rtrim((string) config('app.url'), '/').'/gallery"', false)
+        ->assertSee('rel="canonical" href="'.rtrim((string) config('app.url'), '/').'/gallery"', false)
         ->assertSee('ImageGallery', false)
         ->assertSee('atlas.svg', false)
         ->assertSee('index, follow', false);
@@ -35,6 +37,7 @@ test('sitemap lists the public pages and gallery images', function () {
         ->assertOk()
         ->assertHeader('Content-Type', 'application/xml; charset=UTF-8')
         ->assertSee('<loc>'.$base.'/</loc>', false)
+        ->assertSee('<loc>'.$base.'/work</loc>', false)
         ->assertSee('<loc>'.$base.'/gallery</loc>', false)
         ->assertSee('<image:loc>'.$base.'/images/portfolio/gallery/atlas.svg</image:loc>', false);
 });
@@ -57,6 +60,7 @@ test('llms txt provides a factual portfolio summary', function () {
         ->assertOk()
         ->assertHeader('Content-Type', 'text/plain; charset=UTF-8')
         ->assertSee('# Xuan Jinyu', false)
+        ->assertSee('Work: '.$base.'/work', false)
         ->assertSee('Gallery: '.$base.'/gallery', false)
         ->assertSee('## Experience', false)
         ->assertSee('## Selected work', false)

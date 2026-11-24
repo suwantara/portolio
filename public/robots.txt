@@ -1,0 +1,58 @@
+User-agent: *
+Allow: /
+Disallow: /settings/
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirm-password
+
+User-agent: Googlebot
+Allow: /
+Disallow: /settings/
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirm-password
+
+User-agent: GPTBot
+Allow: /
+Disallow: /settings/
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirm-password
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /settings/
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirm-password
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /settings/
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirm-password
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /settings/
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirm-password
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /settings/
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirm-password
+
+Sitemap: https://xuanjinyu.com/sitemap.xml
+# LLM-friendly summary: https://xuanjinyu.com/llms.txt

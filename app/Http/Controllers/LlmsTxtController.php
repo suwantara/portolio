@@ -30,6 +30,7 @@ class LlmsTxtController extends Controller
             '## Contact',
             '',
             '- Portfolio: '.$base.'/',
+            '- Work: '.$base.'/work',
             '- Gallery: '.$base.'/gallery',
             '- Blog: '.$base.'/blog',
             '- Email: '.$this->stringValue($profile, 'email'),
@@ -75,11 +76,15 @@ class LlmsTxtController extends Controller
             $lines = [...$lines, '## Selected work', ''];
 
             foreach ($projects as $project) {
-                $link = $this->absoluteAsset(
-                    $this->stringValue($project, 'link'),
-                    $base,
-                    $base.'/#work',
-                );
+                $slug = $this->stringValue($project, 'slug');
+                $detailUrl = $slug !== '' ? $base.'/work/'.$slug : '';
+                $link = $detailUrl !== ''
+                    ? $detailUrl
+                    : $this->absoluteAsset(
+                        $this->stringValue($project, 'link'),
+                        $base,
+                        $base.'/work',
+                    );
 
                 $lines[] = '- ['.$this->stringValue($project, 'name').']('.$link.'): '
                     .$this->stringValue($project, 'description');

@@ -1,8 +1,14 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import type { PortfolioSeo } from '@/types';
 
     let { seo }: { seo: PortfolioSeo } = $props();
 
+    onMount(() => {
+        document.head
+            .querySelectorAll('[data-inertia-fallback]')
+            .forEach((element) => element.remove());
+    });
 </script>
 
 <svelte:head>

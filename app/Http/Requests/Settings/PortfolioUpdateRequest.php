@@ -76,6 +76,10 @@ class PortfolioUpdateRequest extends FormRequest
             'projects.*.image' => ['nullable', 'string', 'max:2048', new AssetUrl],
             'projects.*.link' => ['nullable', 'url:http,https', 'max:2048'],
             'projects.*.featured' => ['required', 'boolean'],
+            'projects.*.selected' => ['sometimes', 'boolean'],
+            'projects.*.slug' => ['nullable', 'string', 'max:160'],
+            'projects.*.gallery' => ['array', 'max:20'],
+            'projects.*.gallery.*' => ['nullable', 'string', 'max:2048', new AssetUrl],
 
             'gallery' => ['array', 'max:100'],
             'gallery.*.image' => ['required', 'string', 'max:2048', new AssetUrl],
@@ -128,6 +132,10 @@ class PortfolioUpdateRequest extends FormRequest
             'blog_header.eyebrow' => ['required', 'string', 'max:80'],
             'blog_header.title' => ['required', 'string', 'max:80'],
             'blog_header.description' => ['required', 'string', 'max:500'],
+
+            'work_header.eyebrow' => ['required', 'string', 'max:80'],
+            'work_header.title' => ['required', 'string', 'max:80'],
+            'work_header.description' => ['required', 'string', 'max:500'],
 
             'footer_note' => ['required', 'string', 'max:200'],
         ];

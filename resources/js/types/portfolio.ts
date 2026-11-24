@@ -62,6 +62,9 @@ export type PortfolioProject = {
     image: string | null;
     link: string | null;
     featured: boolean;
+    selected?: boolean;
+    slug: string;
+    gallery: (string | null)[];
 };
 
 export type PortfolioGalleryItem = {
@@ -125,6 +128,7 @@ export type PortfolioContent = {
     socials: PortfolioSocial[];
     gallery_header: PortfolioPageHeader;
     blog_header: PortfolioPageHeader;
+    work_header: PortfolioPageHeader;
     cta: PortfolioCta;
     footer_note: string;
 };

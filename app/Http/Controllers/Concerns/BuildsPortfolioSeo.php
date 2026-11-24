@@ -7,6 +7,25 @@ use Illuminate\Support\Str;
 
 trait BuildsPortfolioSeo
 {
+    private const BRAND_NAME = 'Xuanjinyu';
+
+    private const LEGAL_NAME = 'I Wayan Suwantara Putra';
+
+    private const JOB_TITLE = 'Full-Stack Developer & Graphic Designer';
+
+    private const HOME_TITLE = 'Xuanjinyu — I Wayan Suwantara Putra | Full-Stack Developer & Graphic Designer';
+
+    /**
+     * @var array<int, string>
+     */
+    private const KNOWS_ABOUT = [
+        'Full-Stack Web Development',
+        'Laravel',
+        'Svelte',
+        'UI/UX Design',
+        'Graphic Design',
+    ];
+
     /**
      * Build the SEO payload for the home page.
      *
@@ -19,22 +38,24 @@ trait BuildsPortfolioSeo
         $base = $this->portfolioBaseUrl();
         $url = $base.'/';
 
-        $name = $this->stringValue($profile, 'name', (string) config('app.name'));
-        $role = $this->stringValue($profile, 'role');
         $tagline = $this->stringValue($profile, 'tagline');
         $location = $this->stringValue($profile, 'location');
         $email = $this->stringValue($profile, 'email');
         $about = $this->stringList($portfolio, 'about');
 
-        $title = $role !== '' ? $name.' — '.$role : $name;
-        $description = $tagline !== '' ? $tagline : 'Portfolio of '.$name.'.';
+        $title = self::HOME_TITLE;
+        $description = $tagline !== '' ? $tagline : 'Portfolio of '.self::LEGAL_NAME.'.';
         $ogImage = $this->ogImage($base);
         $avatar = $this->absoluteAsset(
             $this->stringValue($profile, 'avatar'),
             $base,
         );
         $sameAs = $this->socialUrls($portfolio);
-        $skills = $this->skillNames($portfolio);
+
+        if (! $this->hasLinkedInUrl($sameAs)) {
+            $sameAs[] = 'https://linkedin.com';
+        }
+
         $languages = array_column($this->arrayList($portfolio, 'languages'), 'name');
         $education = array_column($this->arrayList($portfolio, 'education'), 'school');
         $projects = $this->arrayList($portfolio, 'projects');
@@ -42,8 +63,9 @@ trait BuildsPortfolioSeo
         $person = $this->withoutEmptyValues([
             '@type' => 'Person',
             '@id' => $url.'#person',
-            'name' => $name,
-            'jobTitle' => $role,
+            'name' => self::LEGAL_NAME,
+            'alternateName' => [self::BRAND_NAME, 'Xuan'],
+            'jobTitle' => self::JOB_TITLE,
             'description' => trim(implode(' ', array_slice($about, 0, 2))),
             'url' => $url,
             'image' => $avatar !== '' ? $avatar : $ogImage,
@@ -52,7 +74,7 @@ trait BuildsPortfolioSeo
                 ? ['@type' => 'PostalAddress', 'addressLocality' => $location]
                 : null,
             'sameAs' => $sameAs,
-            'knowsAbout' => $skills,
+            'knowsAbout' => self::KNOWS_ABOUT,
             'knowsLanguage' => array_values(array_filter($languages, 'is_string')),
             'alumniOf' => array_values(array_map(
                 fn (mixed $school): array => [
@@ -68,10 +90,12 @@ trait BuildsPortfolioSeo
                 '@type' => 'WebSite',
                 '@id' => $url.'#website',
                 'url' => $url,
-                'name' => $name,
+                'name' => self::BRAND_NAME,
+                'alternateName' => [self::LEGAL_NAME],
                 'description' => $description,
                 'inLanguage' => str_replace('_', '-', app()->getLocale()),
             ],
+            $person,
             [
                 '@type' => 'ProfilePage',
                 '@id' => $url.'#profile',
@@ -79,7 +103,7 @@ trait BuildsPortfolioSeo
                 'name' => $title,
                 'description' => $description,
                 'isPartOf' => ['@id' => $url.'#website'],
-                'mainEntity' => $person,
+                'mainEntity' => ['@id' => $url.'#person'],
             ],
         ];
 
@@ -98,12 +122,135 @@ trait BuildsPortfolioSeo
             'image' => $ogImage,
             'type' => 'profile',
             'robots' => 'index, follow, max-image-preview:large',
-            'site_name' => $name,
-            'author' => $name,
+            'site_name' => self::BRAND_NAME,
+            'author' => self::LEGAL_NAME,
             'schema' => [
                 '@context' => 'https://schema.org',
                 '@graph' => $graph,
             ],
+        ];
+    }
+
+    /**
+     * Build the SEO payload for the full work index.
+     *
+     * @param  array<string, mixed>  $portfolio
+     * @return array<string, mixed>
+     */
+    protected function workSeo(array $portfolio): array
+    {
+        $base = $this->portfolioBaseUrl();
+        $header = $this->arrayValue($portfolio, 'work_header');
+        $projects = $this->arrayList($portfolio, 'projects');
+        $title = $this->stringValue($header, 'title', 'Work').' — '.self::BRAND_NAME;
+        $description = str_replace(
+            '{count}',
+            (string) count($projects),
+            $this->stringValue(
+                $header,
+                'description',
+                'Projects and case studies by '.self::BRAND_NAME.'.',
+            ),
+        );
+        $url = $base.'/work';
+
+        return [
+            'title' => $title,
+            'description' => $description,
+            'canonical' => $url,
+            'image' => $this->ogImage($base),
+            'type' => 'website',
+            'robots' => 'index, follow, max-image-preview:large',
+            'site_name' => self::BRAND_NAME,
+            'author' => self::LEGAL_NAME,
+            'schema' => $this->withoutEmptyValues([
+                '@context' => 'https://schema.org',
+                '@type' => 'CollectionPage',
+                'name' => $title,
+                'description' => $description,
+                'url' => $url,
+                'mainEntity' => [
+                    '@type' => 'ItemList',
+                    'itemListElement' => $this->projectListItems(
+                        $projects,
+                        $base,
+                        $url,
+                    ),
+                ],
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => self::LEGAL_NAME,
+                    'url' => $base.'/',
+                ],
+            ]),
+        ];
+    }
+
+    /**
+     * Build the SEO payload for a project case study.
+     *
+     * @param  array<string, mixed>  $portfolio
+     * @param  array<string, mixed>  $project
+     * @return array<string, mixed>
+     */
+    protected function projectSeo(array $portfolio, array $project): array
+    {
+        $base = $this->portfolioBaseUrl();
+        $slug = $this->stringValue($project, 'slug');
+        $url = $base.'/work/'.$slug;
+        $name = $this->stringValue($project, 'name', 'Project');
+        $description = Str::limit(
+            trim(strip_tags($this->stringValue($project, 'description'))),
+            160,
+        );
+        $images = [];
+
+        foreach (array_merge(
+            [$this->stringValue($project, 'image')],
+            $this->stringList($project, 'gallery'),
+        ) as $asset) {
+            $image = $this->absoluteAsset($asset, $base);
+
+            if ($image !== '') {
+                $images[] = $image;
+            }
+        }
+
+        $images = array_values(array_unique($images));
+        $image = $images[0] ?? $this->ogImage($base);
+        $title = $name.' — '.self::BRAND_NAME;
+
+        return [
+            'title' => $title,
+            'description' => $description !== ''
+                ? $description
+                : 'A project case study by '.self::BRAND_NAME.'.',
+            'canonical' => $url,
+            'image' => $image,
+            'type' => 'article',
+            'robots' => 'index, follow, max-image-preview:large',
+            'site_name' => self::BRAND_NAME,
+            'author' => self::LEGAL_NAME,
+            'schema' => $this->withoutEmptyValues([
+                '@context' => 'https://schema.org',
+                '@type' => 'CreativeWork',
+                'name' => $name,
+                'description' => $description,
+                'image' => $images === [] ? $image : $images,
+                'url' => $url,
+                'dateCreated' => $this->stringValue($project, 'year'),
+                'keywords' => $this->stringList($project, 'tags'),
+                'author' => [
+                    '@type' => 'Person',
+                    'name' => self::LEGAL_NAME,
+                    'url' => $base.'/',
+                ],
+                'creator' => [
+                    '@type' => 'Person',
+                    'name' => self::LEGAL_NAME,
+                    'url' => $base.'/',
+                ],
+            ]),
         ];
     }
 
@@ -115,19 +262,17 @@ trait BuildsPortfolioSeo
      */
     protected function gallerySeo(array $portfolio): array
     {
-        $profile = $this->arrayValue($portfolio, 'profile');
         $base = $this->portfolioBaseUrl();
-        $name = $this->stringValue($profile, 'name', (string) config('app.name'));
         $header = $this->arrayValue($portfolio, 'gallery_header');
         $galleryItems = $this->arrayList($portfolio, 'gallery');
-        $title = $this->stringValue($header, 'title', 'Gallery').' — '.$name;
+        $title = $this->stringValue($header, 'title', 'Gallery').' — '.self::BRAND_NAME;
         $description = str_replace(
             '{count}',
             (string) count($galleryItems),
             $this->stringValue(
                 $header,
                 'description',
-                'Selected images and visual studies by '.$name.'.',
+                'Selected images and visual studies by '.self::BRAND_NAME.'.',
             ),
         );
 
@@ -158,8 +303,8 @@ trait BuildsPortfolioSeo
             'image' => $ogImage,
             'type' => 'website',
             'robots' => 'index, follow, max-image-preview:large',
-            'site_name' => $name,
-            'author' => $name,
+            'site_name' => self::BRAND_NAME,
+            'author' => self::LEGAL_NAME,
             'schema' => [
                 '@context' => 'https://schema.org',
                 '@type' => 'ImageGallery',
@@ -169,7 +314,7 @@ trait BuildsPortfolioSeo
                 'image' => $images,
                 'author' => [
                     '@type' => 'Person',
-                    'name' => $name,
+                    'name' => self::LEGAL_NAME,
                     'url' => $base.'/',
                 ],
             ],
@@ -185,15 +330,13 @@ trait BuildsPortfolioSeo
      */
     protected function blogIndexSeo(array $portfolio, iterable $posts): array
     {
-        $profile = $this->arrayValue($portfolio, 'profile');
         $base = $this->portfolioBaseUrl();
-        $name = $this->stringValue($profile, 'name', (string) config('app.name'));
         $header = $this->arrayValue($portfolio, 'blog_header');
-        $title = $this->stringValue($header, 'title', 'Blog').' — '.$name;
+        $title = $this->stringValue($header, 'title', 'Blog').' — '.self::BRAND_NAME;
         $description = $this->stringValue(
             $header,
             'description',
-            'Tutorials, tips, and build notes by '.$name.'.',
+            'Tutorials, tips, and build notes by '.self::BRAND_NAME.'.',
         );
         $url = $base.'/blog';
         $items = [];
@@ -214,8 +357,8 @@ trait BuildsPortfolioSeo
             'image' => $this->ogImage($base),
             'type' => 'website',
             'robots' => 'index, follow, max-image-preview:large',
-            'site_name' => $name,
-            'author' => $name,
+            'site_name' => self::BRAND_NAME,
+            'author' => self::LEGAL_NAME,
             'schema' => $this->withoutEmptyValues([
                 '@context' => 'https://schema.org',
                 '@type' => 'Blog',
@@ -226,7 +369,7 @@ trait BuildsPortfolioSeo
                 'blogPost' => $items,
                 'author' => [
                     '@type' => 'Person',
-                    'name' => $name,
+                    'name' => self::LEGAL_NAME,
                     'url' => $base.'/',
                 ],
             ]),
@@ -241,11 +384,9 @@ trait BuildsPortfolioSeo
      */
     protected function blogPostSeo(array $portfolio, Post $post): array
     {
-        $profile = $this->arrayValue($portfolio, 'profile');
         $base = $this->portfolioBaseUrl();
-        $name = $this->stringValue($profile, 'name', (string) config('app.name'));
         $baseUrl = $base.'/blog/'.$post->slug;
-        $title = $post->title.' — '.$name;
+        $title = $post->title.' — '.self::BRAND_NAME;
         $description = $post->excerpt ?: Str::limit(
             trim(strip_tags($post->renderedContent())),
             160,
@@ -260,8 +401,8 @@ trait BuildsPortfolioSeo
             'image' => $image,
             'type' => 'article',
             'robots' => 'index, follow, max-image-preview:large',
-            'site_name' => $name,
-            'author' => $name,
+            'site_name' => self::BRAND_NAME,
+            'author' => self::LEGAL_NAME,
             'schema' => $this->withoutEmptyValues([
                 '@context' => 'https://schema.org',
                 '@type' => 'BlogPosting',
@@ -278,12 +419,12 @@ trait BuildsPortfolioSeo
                 'inLanguage' => str_replace('_', '-', app()->getLocale()),
                 'author' => [
                     '@type' => 'Person',
-                    'name' => $name,
+                    'name' => self::LEGAL_NAME,
                     'url' => $base.'/',
                 ],
                 'publisher' => [
                     '@type' => 'Organization',
-                    'name' => $name,
+                    'name' => self::BRAND_NAME,
                 ],
             ]),
         ];
@@ -355,6 +496,22 @@ trait BuildsPortfolioSeo
     }
 
     /**
+     * Check whether the social URLs include a LinkedIn profile.
+     *
+     * @param  array<int, string>  $urls
+     */
+    private function hasLinkedInUrl(array $urls): bool
+    {
+        foreach ($urls as $url) {
+            if (str_contains(strtolower($url), 'linkedin.com')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Get the skill names used for schema.org knowsAbout.
      *
      * @param  array<string, mixed>  $portfolio
@@ -385,7 +542,12 @@ trait BuildsPortfolioSeo
         $items = [];
 
         foreach (array_slice($projects, 0, 10) as $index => $project) {
-            $link = $this->absoluteAsset($this->stringValue($project, 'link'), $base);
+            $slug = $this->stringValue($project, 'slug');
+            $detailUrl = $slug !== '' ? $base.'/work/'.$slug : '';
+            $link = $this->absoluteAsset(
+                $this->stringValue($project, 'link'),
+                $base,
+            );
 
             $items[] = [
                 '@type' => 'ListItem',
@@ -394,7 +556,9 @@ trait BuildsPortfolioSeo
                     '@type' => 'CreativeWork',
                     'name' => $this->stringValue($project, 'name'),
                     'description' => $this->stringValue($project, 'description'),
-                    'url' => $link !== '' ? $link : $fallback,
+                    'url' => $detailUrl !== ''
+                        ? $detailUrl
+                        : ($link !== '' ? $link : $fallback),
                 ],
             ];
         }

@@ -8,7 +8,7 @@
     import { cn } from '@/lib/utils';
     import type { PortfolioContent } from '@/types';
 
-    type Page = 'home' | 'gallery' | 'blog' | 'post';
+    type Page = 'home' | 'gallery' | 'blog' | 'post' | 'work';
 
     let {
         portfolio,
@@ -29,10 +29,7 @@
             label: 'Experience',
             href: current === 'home' ? '#experience' : '/#experience',
         },
-        {
-            label: 'Work',
-            href: current === 'home' ? '#work' : '/#work',
-        },
+        { label: 'Work', href: '/work' },
         { label: 'Gallery', href: '/gallery' },
         { label: 'Blog', href: '/blog' },
         {
@@ -53,8 +50,13 @@
         scrolled = window.scrollY > 8;
     }
 
+    function handleBrandClick(): void {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function isActive(href: string): boolean {
         return (
+            (href === '/work' && current === 'work') ||
             (href === '/gallery' && current === 'gallery') ||
             (href === '/blog' && (current === 'blog' || current === 'post'))
         );
@@ -66,41 +68,26 @@
 
 <header class="fixed inset-x-0 top-4 z-50 px-4">
     <nav
-        aria-label="Primary"
+        aria-label="Main Navigation"
         class={cn(
             'liquid-glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pr-2 pl-3 transition-shadow duration-300 sm:pl-4 xl:max-w-5xl 2xl:max-w-6xl',
             scrolled && 'liquid-glass-scrolled',
         )}
     >
-        {#if current === 'home'}
-            <a
-                href="#top"
-                class="flex items-center gap-2.5 rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+        <Link
+            href="/"
+            onclick={handleBrandClick}
+            class="flex items-center gap-2.5 rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
+        >
+            <span
+                class="grid size-8 place-items-center rounded-full bg-foreground text-[13px] font-semibold text-background"
             >
-                <span
-                    class="grid size-8 place-items-center rounded-full bg-foreground text-[13px] font-semibold text-background"
-                >
-                    X
-                </span>
-                <span class="text-[15px] font-semibold tracking-tight">
-                    xuan<span class="text-[#0a66c2] dark:text-sky-400">.</span>
-                </span>
-            </a>
-        {:else}
-            <Link
-                href="/"
-                class="flex items-center gap-2.5 rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-            >
-                <span
-                    class="grid size-8 place-items-center rounded-full bg-foreground text-[13px] font-semibold text-background"
-                >
-                    X
-                </span>
-                <span class="text-[15px] font-semibold tracking-tight">
-                    xuan<span class="text-[#0a66c2] dark:text-sky-400">.</span>
-                </span>
-            </Link>
-        {/if}
+                X
+            </span>
+            <span class="text-[15px] font-semibold tracking-tight">
+                xuan<span class="text-[#0a66c2] dark:text-sky-400">.</span>
+            </span>
+        </Link>
 
         <div class="hidden items-center gap-0.5 lg:flex">
             {#each navLinks as link (link.href)}
