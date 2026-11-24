@@ -700,7 +700,7 @@
                         {#each projects as project, index (project.name + index)}
                             <article
                                 class={cn(
-                                    'group overflow-hidden rounded-xl border border-border/70 bg-background/40',
+                                    'group flex flex-col overflow-hidden rounded-xl border border-border/70 bg-background/40',
                                     project.featured && 'sm:col-span-2',
                                 )}
                             >
@@ -786,21 +786,25 @@
                                     </span>
                                 </div>
 
-                                <div class="p-4 sm:p-5">
+                                <div class="flex flex-1 flex-col p-4 sm:p-5">
                                     <div
                                         class="flex items-start justify-between gap-3"
                                     >
-                                        <h3 class="font-semibold">
+                                        <h3
+                                            class="line-clamp-2 min-h-12 min-w-0 flex-1 font-semibold"
+                                            title={project.name}
+                                        >
                                             {project.name}
                                         </h3>
                                         <span
-                                            class="font-mono text-[10px] tracking-wider text-muted-foreground uppercase"
+                                            class="shrink-0 font-mono text-[10px] tracking-wider text-muted-foreground uppercase"
                                         >
                                             {project.year}
                                         </span>
                                     </div>
                                     <p
-                                        class="mt-1 text-sm leading-relaxed text-muted-foreground"
+                                        class="mt-1 line-clamp-3 min-h-[4.25rem] text-sm leading-relaxed text-muted-foreground"
+                                        title={project.description}
                                     >
                                         {project.description}
                                     </p>
@@ -818,7 +822,7 @@
                                             href={project.link}
                                             target="_blank"
                                             rel="noreferrer noopener"
-                                            class="mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
+                                            class="mt-auto pt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                         >
                                             View project
                                             <ExternalLink
@@ -829,7 +833,7 @@
                                     {:else}
                                         <a
                                             href={projectMailto(project.name)}
-                                            class="mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
+                                            class="mt-auto pt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                         >
                                             Request case study
                                             <ArrowRight
