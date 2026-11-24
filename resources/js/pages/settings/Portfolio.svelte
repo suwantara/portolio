@@ -59,7 +59,7 @@
         experience: ['experience.'],
         work: ['projects.'],
         skills: ['skill_groups.'],
-        education: ['education.', 'languages.', 'currently_exploring.'],
+        education: ['education.', 'certifications.', 'languages.', 'currently_exploring.'],
         gallery: ['gallery.'],
         pages: ['gallery_header.', 'blog_header.'],
         documents: ['documents.'],
