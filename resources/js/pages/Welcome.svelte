@@ -8,14 +8,14 @@
     import Clock from '@lucide/svelte/icons/clock';
     import CodeXml from '@lucide/svelte/icons/code-xml';
     import Copy from '@lucide/svelte/icons/copy';
-    import Unduh from '@lucide/svelte/icons/download';
+    import Download from '@lucide/svelte/icons/download';
     import Eye from '@lucide/svelte/icons/eye';
     import FileText from '@lucide/svelte/icons/file-text';
-    import GaleriHorizontal from '@lucide/svelte/icons/gallery-horizontal';
+    import GalleryHorizontal from '@lucide/svelte/icons/gallery-horizontal';
     import ExternalLink from '@lucide/svelte/icons/external-link';
     import Globe from '@lucide/svelte/icons/globe';
     import GraduationCap from '@lucide/svelte/icons/graduation-cap';
-    import BahasaIcon from '@lucide/svelte/icons/languages';
+    import LanguagesIcon from '@lucide/svelte/icons/languages';
     import Layers from '@lucide/svelte/icons/layers';
     import Mail from '@lucide/svelte/icons/mail';
     import MapPin from '@lucide/svelte/icons/map-pin';
@@ -27,7 +27,7 @@
     import SeoHead from '@/components/SeoHead.svelte';
     import BaliClockRails from '@/components/BaliClockRails.svelte';
     import CursorGlow from '@/components/CursorGlow.svelte';
-    import GaleriGrid from '@/components/GaleriGrid.svelte';
+    import GalleryGrid from '@/components/GalleryGrid.svelte';
     import SocialLinks from '@/components/SocialLinks.svelte';
     import ThemeToggle from '@/components/ThemeToggle.svelte';
     import {
@@ -96,7 +96,7 @@
     const mobileNavItem =
         'block rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none';
 
-    let menuBuka = $state(false);
+    let menuOpen = $state(false);
     let copied = $state(false);
     let scrolled = $state(false);
     let copyTimer: ReturnType<typeof setTimeout> | undefined;
@@ -120,7 +120,7 @@
         )}`;
     }
 
-    let documentBuka = $state(false);
+    let documentOpen = $state(false);
     let activeDocument = $state<PortfolioDocument | null>(null);
 
     function runClick(handler: unknown): void {
@@ -135,7 +135,7 @@
         }
 
         activeDocument = document;
-        documentBuka = true;
+        documentOpen = true;
     }
 
     function fileExtension(url: string | null): string {
@@ -153,7 +153,7 @@
         return fileExtension(url) === 'pdf';
     }
 
-    function isLihatableImage(url: string | null): boolean {
+    function isViewableImage(url: string | null): boolean {
         return ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif', 'svg'].includes(
             fileExtension(url),
         );
@@ -197,7 +197,7 @@
 
     <header class="fixed inset-x-0 top-4 z-50 px-4">
         <nav
-            aria-label="Primary"
+            aria-label="Navigasi utama"
             class={cn(
                 'liquid-glass mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-full pr-2 pl-3 transition-shadow duration-300 sm:pl-4',
                 scrolled && 'liquid-glass-scrolled',
@@ -250,13 +250,13 @@
 
                 <button
                     type="button"
-                    onclick={() => (menuBuka = !menuBuka)}
-                    aria-expanded={menuBuka}
+                    onclick={() => (menuOpen = !menuOpen)}
+                    aria-expanded={menuOpen}
                     aria-controls="mobile-nav"
                     aria-label="Buka atau tutup navigasi"
                     class="liquid-glass-control grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
                 >
-                    {#if menuBuka}
+                    {#if menuOpen}
                         <X class="size-4" aria-hidden="true" />
                     {:else}
                         <Menu class="size-4" aria-hidden="true" />
@@ -265,17 +265,17 @@
             </div>
         </nav>
 
-        {#if menuBuka}
+        {#if menuOpen}
             <nav
                 id="mobile-nav"
-                aria-label="Mobile"
+                aria-label="Navigasi seluler"
                 class="liquid-glass mx-auto mt-2 w-full max-w-6xl rounded-2xl p-2 md:hidden"
             >
                 {#each navLinks as link (link.href)}
                     {#if link.href.startsWith('#')}
                         <a
                             href={link.href}
-                            onclick={() => (menuBuka = false)}
+                            onclick={() => (menuOpen = false)}
                             class={mobileNavItem}
                         >
                             {link.label}
@@ -283,7 +283,7 @@
                     {:else}
                         <Link
                             href={link.href}
-                            onclick={() => (menuBuka = false)}
+                            onclick={() => (menuOpen = false)}
                             class={mobileNavItem}
                         >
                             {link.label}
@@ -340,7 +340,7 @@
                     <p
                         class="absolute top-5 left-6 font-mono text-[10px] font-medium tracking-[0.22em] text-slate-500 uppercase dark:text-slate-400"
                     >
-                        Portofolio · 2026
+                        Portofolio — 2026
                     </p>
                     <p
                         class="absolute right-6 bottom-5 font-mono text-[10px] tracking-[0.18em] text-slate-500/80 uppercase dark:text-slate-400/80"
@@ -711,7 +711,7 @@
                                     {#if project.image}
                                         <img
                                             src={project.image}
-                                            alt={`${project.name} project preview`}
+                                            alt={`Pratinjau proyek ${project.name}`}
                                             class="absolute inset-0 size-full object-cover"
                                         />
                                         <div
@@ -816,7 +816,7 @@
                                             rel="noreferrer noopener"
                                             class="mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                         >
-                                            Lihat proyek
+                                            View project
                                             <ExternalLink
                                                 class="size-3.5"
                                                 aria-hidden="true"
@@ -827,7 +827,7 @@
                                             href={projectMailto(project.name)}
                                             class="mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-[#0a66c2] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none dark:text-sky-400"
                                         >
-                                            Minta studi kasus
+                                            Request case study
                                             <ArrowRight
                                                 class="size-3.5"
                                                 aria-hidden="true"
@@ -853,7 +853,7 @@
                                 <span
                                     class="grid size-8 place-items-center rounded-lg bg-muted text-muted-foreground"
                                 >
-                                    <GaleriHorizontal
+                                    <GalleryHorizontal
                                         class="size-4"
                                         aria-hidden="true"
                                     />
@@ -885,7 +885,7 @@
                             </div>
                         </div>
 
-                        <GaleriGrid items={galleryPreview} columns={2} />
+                        <GalleryGrid items={galleryPreview} columns={2} />
                     </section>
                 {/if}
 
@@ -951,7 +951,7 @@
                                         <div
                                             class="mt-4 flex flex-wrap items-center gap-2"
                                         >
-                                            {#if isPdf(document.file) || isLihatableImage(document.file)}
+                                            {#if isPdf(document.file) || isViewableImage(document.file)}
                                                 <button
                                                     type="button"
                                                     onclick={() =>
@@ -985,7 +985,7 @@
                                                 rel="noreferrer noopener"
                                                 class="inline-flex h-8 items-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                                             >
-                                                <Unduh
+                                                <Download
                                                     class="size-3.5"
                                                     aria-hidden="true"
                                                 />
@@ -1105,7 +1105,7 @@
                         <span
                             class="font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase"
                         >
-                            07
+                            08
                         </span>
                     </div>
 
@@ -1296,8 +1296,7 @@
                         {profile.availability_note}
                     </p>
                     <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        Berbasis di {profile.location}, terbuka bekerja jarak jauh dengan tim
-                        di berbagai zona waktu.
+                        Berbasis di {profile.location}, terbuka bekerja jarak jauh dengan tim di berbagai zona waktu.
                     </p>
 
                     <a
@@ -1317,7 +1316,7 @@
                         <span
                             class="grid size-8 place-items-center rounded-lg bg-muted text-muted-foreground"
                         >
-                            <BahasaIcon
+                            <LanguagesIcon
                                 class="size-4"
                                 aria-hidden="true"
                             />
@@ -1402,7 +1401,7 @@
             </div>
         </section>
 
-        <Dialog bind:open={documentBuka}>
+        <Dialog bind:open={documentOpen}>
             <DialogContent class="max-w-4xl p-3 sm:p-4">
                 {#if activeDocument}
                     <div class="flex items-start justify-between gap-4 px-1 pb-3">
@@ -1419,7 +1418,7 @@
                                 <button
                                     type="button"
                                     onclick={() => runClick(props.onClick)}
-                                    aria-label="Close document viewer"
+                                    aria-label="Tutup pratinjau dokumen"
                                     class="grid size-8 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                                 >
                                     <X class="size-4" aria-hidden="true" />
@@ -1435,7 +1434,7 @@
                                 title={activeDocument.title}
                                 class="h-[68vh] w-full rounded-lg border border-border/70 bg-white"
                             ></iframe>
-                        {:else if isLihatableImage(activeDocument.file)}
+                        {:else if isViewableImage(activeDocument.file)}
                             <img
                                 src={activeDocument.file}
                                 alt={activeDocument.title}
@@ -1450,7 +1449,7 @@
                                 rel="noreferrer noopener"
                                 class="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-[#0a66c2]/10 hover:text-[#0a66c2] dark:hover:bg-sky-400/10 dark:hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
                             >
-                                Buka in new tab
+                                Buka di tab baru
                                 <ExternalLink
                                     class="size-3.5"
                                     aria-hidden="true"
