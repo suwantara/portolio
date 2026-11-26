@@ -60,6 +60,7 @@
         work: ['projects.'],
         skills: ['skill_groups.'],
         education: ['education.', 'languages.', 'currently_exploring.'],
+        organizations: ['organizations.'],
         gallery: ['gallery.'],
         pages: ['work_header.', 'gallery_header.', 'blog_header.'],
         documents: ['documents.'],
@@ -259,6 +260,19 @@
         form.education.push({
             degree: '',
             school: '',
+            period: '',
+            description: '',
+        });
+    }
+
+    function addOrganization(): void {
+        if (form.organizations.length >= 12) {
+            return;
+        }
+
+        form.organizations.push({
+            organization: '',
+            role: '',
             period: '',
             description: '',
         });
@@ -1287,6 +1301,92 @@
                     addLabel="Add topic"
                     {errors}
                 />
+            </Panel>
+        {:else if activeTab === 'organizations'}
+            <Panel title="Organizational experience">
+                <div class="space-y-4">
+                    {#each form.organizations as item, index (index)}
+                        <div
+                            class="rounded-xl border border-border/60 bg-background/40 p-4"
+                        >
+                            <RepeaterHeader
+                                title={item.organization ||
+                                    'Untitled organization'}
+                                subtitle={item.role}
+                                canMoveUp={index > 0}
+                                canMoveDown={index <
+                                    form.organizations.length - 1}
+                                onMoveUp={() =>
+                                    moveItem(form.organizations, index, -1)}
+                                onMoveDown={() =>
+                                    moveItem(form.organizations, index, 1)}
+                                onRemove={() =>
+                                    removeItem(form.organizations, index)}
+                            />
+
+                            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                                <Field
+                                    label="Organization"
+                                    error={getError(
+                                        errors,
+                                        `organizations.${index}.organization`,
+                                    )}
+                                >
+                                    <Input bind:value={item.organization} />
+                                </Field>
+                                <Field
+                                    label="Role"
+                                    error={getError(
+                                        errors,
+                                        `organizations.${index}.role`,
+                                    )}
+                                >
+                                    <Input
+                                        bind:value={item.role}
+                                        placeholder="Coordinator"
+                                    />
+                                </Field>
+                                <Field
+                                    label="Period"
+                                    error={getError(
+                                        errors,
+                                        `organizations.${index}.period`,
+                                    )}
+                                >
+                                    <Input
+                                        bind:value={item.period}
+                                        placeholder="2017 — 2018"
+                                    />
+                                </Field>
+                                <div class="sm:col-span-2">
+                                    <Field
+                                        label="Description"
+                                        error={getError(
+                                            errors,
+                                            `organizations.${index}.description`,
+                                        )}
+                                    >
+                                        <Textarea
+                                            bind:value={item.description}
+                                            rows={2}
+                                        />
+                                    </Field>
+                                </div>
+                            </div>
+                        </div>
+                    {/each}
+
+                    {#if form.organizations.length < 12}
+                        <button
+                            type="button"
+                            onclick={addOrganization}
+                            class={addButton}
+                        >
+                            <Plus class="size-4" aria-hidden="true" />
+                            Add organization
+                        </button>
+                    {/if}
+                </div>
             </Panel>
         {:else if activeTab === 'gallery'}
             <div class="space-y-5">

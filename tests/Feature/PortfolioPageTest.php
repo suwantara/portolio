@@ -11,6 +11,7 @@ test('portfolio page renders the default content', function () {
             ->where('portfolio.profile.name', config('portfolio.defaults.profile.name'))
             ->has('portfolio.experience', 3)
             ->has('portfolio.gallery', 3)
+            ->has('portfolio.organizations', 1)
         );
 });
 

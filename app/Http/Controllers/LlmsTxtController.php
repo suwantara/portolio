@@ -175,6 +175,20 @@ class LlmsTxtController extends Controller
             $lines[] = '';
         }
 
+        $organizations = $this->arrayList($content, 'organizations');
+
+        if ($organizations !== []) {
+            $lines = [...$lines, '## Organizational experience', ''];
+
+            foreach ($organizations as $item) {
+                $lines[] = '- '.$this->stringValue($item, 'role').', '
+                    .$this->stringValue($item, 'organization')
+                    .' ('.$this->stringValue($item, 'period').')';
+            }
+
+            $lines[] = '';
+        }
+
         $languages = $this->arrayList($content, 'languages');
 
         if ($languages !== []) {

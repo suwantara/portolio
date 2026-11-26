@@ -93,6 +93,13 @@ export type PortfolioEducation = {
     description: string;
 };
 
+export type PortfolioOrganization = {
+    organization: string;
+    role: string;
+    period: string;
+    description: string;
+};
+
 export type PortfolioLanguage = {
     name: string;
     level: string;
@@ -123,6 +130,7 @@ export type PortfolioContent = {
     documents: PortfolioDocument[];
     skill_groups: PortfolioSkillGroup[];
     education: PortfolioEducation[];
+    organizations: PortfolioOrganization[];
     languages: PortfolioLanguage[];
     currently_exploring: string[];
     socials: PortfolioSocial[];

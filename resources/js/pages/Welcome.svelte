@@ -20,6 +20,7 @@
     import MapPin from '@lucide/svelte/icons/map-pin';
     import UserPlus from '@lucide/svelte/icons/user-plus';
     import UserRound from '@lucide/svelte/icons/user-round';
+    import UsersRound from '@lucide/svelte/icons/users-round';
     import X from '@lucide/svelte/icons/x';
     import { onDestroy, onMount } from 'svelte';
     import SeoHead from '@/components/SeoHead.svelte';
@@ -61,6 +62,7 @@
     const documents = $derived(portfolio.documents);
     const skillGroups = $derived(portfolio.skill_groups);
     const education = $derived(portfolio.education);
+    const organizations = $derived(portfolio.organizations);
     const currentlyExploring = $derived(portfolio.currently_exploring);
     const languages = $derived(portfolio.languages);
     const socials = $derived(portfolio.socials);
@@ -883,6 +885,82 @@
                                 </span>
                             {/each}
                         </div>
+                    </div>
+                </section>
+
+                <section
+                    aria-labelledby="organizations-heading"
+                    class={cn(card, 'p-5 sm:p-6')}
+                >
+                    <div class="mb-4 flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-2.5">
+                            <span
+                                class="grid size-8 place-items-center rounded-lg bg-muted text-muted-foreground"
+                            >
+                                <UsersRound
+                                    class="size-4"
+                                    aria-hidden="true"
+                                />
+                            </span>
+                            <h2
+                                id="organizations-heading"
+                                class="text-lg font-semibold tracking-tight"
+                            >
+                                Organizational experience
+                            </h2>
+                        </div>
+                        <span
+                            class="font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase"
+                        >
+                            08
+                        </span>
+                    </div>
+
+                    <div class="space-y-4">
+                        {#each organizations as item, index (item.organization + index)}
+                            <div class="flex gap-4">
+                                <div
+                                    class="grid size-12 shrink-0 place-items-center rounded-xl border border-border/70 bg-background/60 text-muted-foreground"
+                                    aria-hidden="true"
+                                >
+                                    <UsersRound class="size-5" />
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <div
+                                        class="flex flex-wrap items-start justify-between gap-x-4 gap-y-1"
+                                    >
+                                        <div>
+                                            <h3
+                                                class="text-[15px] font-semibold sm:text-base"
+                                            >
+                                                {item.role}
+                                            </h3>
+                                            <p
+                                                class="text-sm text-muted-foreground"
+                                            >
+                                                {item.organization}
+                                            </p>
+                                        </div>
+                                        <p
+                                            class="font-mono text-[10px] whitespace-nowrap tracking-[0.14em] text-muted-foreground uppercase"
+                                        >
+                                            {item.period}
+                                        </p>
+                                    </div>
+                                    {#if item.description}
+                                        <p
+                                            class="mt-2 text-sm leading-relaxed break-words text-muted-foreground"
+                                        >
+                                            {item.description}
+                                        </p>
+                                    {/if}
+                                </div>
+                            </div>
+                        {:else}
+                            <p class="text-sm text-muted-foreground">
+                                No organizational experience added yet.
+                            </p>
+                        {/each}
                     </div>
                 </section>
             </div>

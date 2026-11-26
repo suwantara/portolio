@@ -29,6 +29,7 @@ class PortfolioController extends Controller
         'work',
         'skills',
         'education',
+        'organizations',
         'gallery',
         'documents',
         'pages',

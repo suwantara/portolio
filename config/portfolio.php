@@ -184,6 +184,14 @@ return [
                 'description' => 'Software engineering, human-computer interaction, and far too many late-night side projects.',
             ],
         ],
+        'organizations' => [
+            [
+                'organization' => 'Computer Science Student Association',
+                'role' => 'Media and Design Coordinator',
+                'period' => '2017 — 2018',
+                'description' => 'Ran the visual identity, event media, and social channels for the annual campus tech week.',
+            ],
+        ],
         'languages' => [
             ['name' => 'Indonesian', 'level' => 'Native'],
             ['name' => 'English', 'level' => 'Professional'],

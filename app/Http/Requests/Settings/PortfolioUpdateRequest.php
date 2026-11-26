@@ -104,6 +104,12 @@ class PortfolioUpdateRequest extends FormRequest
             'education.*.period' => ['required', 'string', 'max:80'],
             'education.*.description' => ['nullable', 'string', 'max:1000'],
 
+            'organizations' => ['array', 'max:12'],
+            'organizations.*.organization' => ['required', 'string', 'max:160'],
+            'organizations.*.role' => ['required', 'string', 'max:160'],
+            'organizations.*.period' => ['required', 'string', 'max:80'],
+            'organizations.*.description' => ['nullable', 'string', 'max:1000'],
+
             'languages' => ['array', 'max:20'],
             'languages.*.name' => ['required', 'string', 'max:80'],
             'languages.*.level' => ['required', 'string', 'max:80'],

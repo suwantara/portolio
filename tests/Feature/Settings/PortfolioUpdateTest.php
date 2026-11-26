@@ -43,6 +43,8 @@ test('admins can update portfolio content', function () {
     $content['profile']['name'] = 'Updated Name';
     $content['socials'][0]['name'] = 'discord';
     $content['socials'][0]['href'] = 'https://discord.com/users/xuan';
+    $content['organizations'][0]['organization'] = 'Updated Organization';
+    $content['organizations'][0]['role'] = 'Updated Role';
 
     $this->actingAs($user)
         ->put(route('portfolio.update'), $content)
@@ -54,6 +56,8 @@ test('admins can update portfolio content', function () {
     expect($saved['profile']['name'])->toBe('Updated Name');
     expect($saved['socials'][0]['name'])->toBe('discord');
     expect($saved['socials'][0]['href'])->toBe('https://discord.com/users/xuan');
+    expect($saved['organizations'][0]['organization'])->toBe('Updated Organization');
+    expect($saved['organizations'][0]['role'])->toBe('Updated Role');
 });
 
 test('portfolio update validates nested content', function () {
@@ -70,6 +74,7 @@ test('portfolio update validates nested content', function () {
     $content['documents'] = [
         ['title' => 'CV', 'description' => '', 'file' => 'not-a-file'],
     ];
+    $content['organizations'][0]['organization'] = '';
 
     $this->actingAs($user)
         ->put(route('portfolio.update'), $content)
@@ -82,6 +87,7 @@ test('portfolio update validates nested content', function () {
             'socials.0.href',
             'gallery.0.image',
             'documents.0.file',
+            'organizations.0.organization',
         ]);
 
     expect(PortfolioSetting::query()->exists())->toBeFalse();
@@ -92,6 +98,11 @@ test('portfolio sections use path based routes', function () {
 
     $this->actingAs($user)
         ->get(route('portfolio.section', 'cta'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->component('settings/Portfolio'));
+
+    $this->actingAs($user)
+        ->get(route('portfolio.section', 'organizations'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page->component('settings/Portfolio'));
 

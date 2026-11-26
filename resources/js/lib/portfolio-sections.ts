@@ -5,6 +5,7 @@ export type PortfolioSectionId =
     | 'work'
     | 'skills'
     | 'education'
+    | 'organizations'
     | 'gallery'
     | 'documents'
     | 'pages'
@@ -28,6 +29,7 @@ export const portfolioSectionGroups: {
             { id: 'work', label: 'Work' },
             { id: 'skills', label: 'Skills' },
             { id: 'education', label: 'Education' },
+            { id: 'organizations', label: 'Organizational experience' },
         ],
     },
     {
