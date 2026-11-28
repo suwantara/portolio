@@ -2,7 +2,10 @@
 
 FROM node:22-bookworm-slim AS node
 
-FROM php:8.5-fpm-bookworm AS app
+# Pin PHP patch eksak untuk build yang deterministik. Naikkan secara sadar
+# saat patch baru keluar (cek https://endoflife.date/api/php.json atau
+# https://hub.docker.com/_/php/tags?name=8.5).
+FROM php:8.5.13-fpm-bookworm AS app
 
 ARG APP_URL=/
 
